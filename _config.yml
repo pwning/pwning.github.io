@@ -17,7 +17,7 @@ show_social_icons:  false
 
 # Disqus post comments
 # (leave blank to disable Disqus)
-disqus_shortname:
+disqus_shortname: pppblogcomments
 
 # Social icons
 github_username:
