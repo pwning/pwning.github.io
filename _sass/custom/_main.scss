@@ -1,0 +1,40 @@
+@import 'theme';
+
+.site-wrap {
+	display: flex;
+	flex-direction: row;
+
+	.measure {
+		display: table;
+
+		.row {
+			display: table-row;
+
+			.sidebar-col {
+				display: table-cell;
+				width: 200px;
+				background-color: $color-neutral-04;
+				color: $color-neutral-01;
+			}
+
+			.content-col {
+				display: table-cell;
+				width: 600px;
+				background-color: $color-neutral-01;
+			}
+		}
+	}
+
+	&::before, &::after {
+		content: "";
+		flex-grow: 1;
+	}
+
+	&::before {
+		background-color: $color-neutral-04;
+	}
+
+	&::after {
+		background-color: $color-neutral-01;
+	}
+}

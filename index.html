@@ -1,24 +1,23 @@
 ---
 layout: default
 ---
-
-<div class="home">
-
-  <div class="posts">
-    {% for post in paginator.posts %}
-      <div class="post py3">
-        <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
-        <a href="{{ post.url | prepend: site.baseurl }}" class="post-link"><h3 class="h1 post-title">{{ post.title }}</h3></a>
-        <p class="post-summary">
-          {% if post.summary %}
-            {{ post.summary }}
-          {% else %}
-            {{ post.excerpt }}
-          {% endif %}
-        </p>
+<div class="row">
+  <div class="sidebar-col">
+    <div class="sidebar-title">Recent Posts</div>
+    {% for post in site.posts %}
+      <div class="sidebar-link">
+        <div class="sidebar-post-title">{{ post.title }}</div>
+        {% if post.ctf %}<div class="sidebar-post-ctf">{{ post.ctf }}</div>{% endif %}
+        {% if post.year %}<div class="sidebar-post-year">{{ post.year }}</div>{% endif %}
+        {% if post.categories %}
+          {% for category in categories %}
+            <div class="sidebar-post-category">{{ post.category }}</div>
+          {% endfor %}
+        {% endif %}
       </div>
     {% endfor %}
   </div>
-
-  {% include pagination.html %}
+  <div class="content-col">
+    <h1>Welcome to the Plaid Parliament of Pwning</h1>
+  </div>
 </div>
