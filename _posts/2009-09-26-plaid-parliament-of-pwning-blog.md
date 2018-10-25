@@ -2,7 +2,6 @@
 title: Plaid Parliament of Pwning Blog
 author: PPP
 layout: post
-permalink: /?p=12
 categories:
   - General News
 ---

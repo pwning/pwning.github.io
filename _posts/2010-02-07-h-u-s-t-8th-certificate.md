@@ -2,7 +2,6 @@
 title: H.U.S.T. 8th Certificate
 author: PPP
 layout: post
-permalink: /?p=140
 categories:
   - General News
 ---

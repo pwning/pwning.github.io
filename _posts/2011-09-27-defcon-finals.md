@@ -2,7 +2,6 @@
 title: Defcon Finals
 author: PPP
 layout: post
-permalink: /?p=592
 categories:
   - General News
 ---

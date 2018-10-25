@@ -2,7 +2,6 @@
 title: Padocon + wgsbd
 author: PPP
 layout: post
-permalink: /?p=418
 categories:
   - General News
 ---

@@ -2,7 +2,6 @@
 title: pCTF Aftermath
 author: PPP
 layout: post
-permalink: /?p=527
 categories:
   - General News
 ---

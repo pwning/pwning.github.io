@@ -2,7 +2,6 @@
 title: pCTF 2012 Statistics
 author: mserrano
 layout: post
-permalink: /?p=834
 categories:
   - General News
   - Report

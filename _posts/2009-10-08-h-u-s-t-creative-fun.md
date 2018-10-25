@@ -2,7 +2,6 @@
 title: 'H.U.S.T. Creative &#038; Fun'
 author: PPP
 layout: post
-permalink: /?p=65
 categories:
   - General News
 ---

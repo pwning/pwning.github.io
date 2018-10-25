@@ -2,7 +2,6 @@
 title: Codegate Finals
 author: PPP
 layout: post
-permalink: /?p=532
 categories:
   - General News
 ---

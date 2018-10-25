@@ -2,7 +2,6 @@
 title: ShmoonCon Ghost in the Shellcode 2011
 author: zoaedk
 layout: post
-permalink: /?p=448
 categories:
   - General News
 ---

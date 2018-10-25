@@ -2,7 +2,6 @@
 title: 'GiTS 2014: gitsmsg'
 author: awreece
 layout: post
-permalink: /?p=1152
 categories:
   - General News
 ---

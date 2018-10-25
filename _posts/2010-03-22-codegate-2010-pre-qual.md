@@ -2,7 +2,6 @@
 title: Codegate 2010 Pre-Qual
 author: PPP
 layout: post
-permalink: /?p=177
 categories:
   - General News
   - Write-Ups

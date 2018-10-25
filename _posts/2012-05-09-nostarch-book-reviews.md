@@ -2,7 +2,6 @@
 title: NoStarch Book Reviews
 author: PPP
 layout: post
-permalink: /?p=730
 categories:
   - General News
 ---

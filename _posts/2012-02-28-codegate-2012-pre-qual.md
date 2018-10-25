@@ -2,7 +2,6 @@
 title: Codegate 2012 Pre-Qual
 author: PPP
 layout: post
-permalink: /?p=660
 categories:
   - General News
 ---

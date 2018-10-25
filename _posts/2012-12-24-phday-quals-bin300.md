@@ -2,7 +2,6 @@
 title: PHDay quals bin300
 author: PPP
 layout: post
-permalink: /?p=1076
 categories:
   - General News
 ---

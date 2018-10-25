@@ -2,7 +2,6 @@
 title: Positive Hack Days
 author: PPP
 layout: post
-permalink: /?p=504
 categories:
   - General News
 ---

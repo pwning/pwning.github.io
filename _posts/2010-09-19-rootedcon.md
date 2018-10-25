@@ -2,7 +2,6 @@
 title: RootedCON
 author: PPP
 layout: post
-permalink: /?p=327
 categories:
   - General News
   - Write-Ups

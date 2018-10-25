@@ -2,7 +2,6 @@
 title: 'HackJam2009 &#8211; 3rd place'
 author: PPP
 layout: post
-permalink: /?p=53
 categories:
   - General News
 ---

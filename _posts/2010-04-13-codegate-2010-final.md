@@ -2,7 +2,6 @@
 title: Codegate 2010 Final
 author: PPP
 layout: post
-permalink: /?p=229
 categories:
   - General News
 ---

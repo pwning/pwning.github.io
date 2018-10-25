@@ -2,7 +2,6 @@
 title: ShmooCon CTF Warmup 2011
 author: zoaedk
 layout: post
-permalink: /?p=410
 categories:
   - Write-Ups
 ---

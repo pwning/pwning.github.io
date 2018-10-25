@@ -2,7 +2,6 @@
 title: HUST 8th write-up
 author: PPP
 layout: post
-permalink: /?p=75
 categories:
   - Write-Ups
 ---

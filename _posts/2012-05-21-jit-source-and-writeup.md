@@ -2,7 +2,6 @@
 title: jit source and writeup
 author: ricky
 layout: post
-permalink: /?p=789
 categories:
   - Write-Ups
 ---

@@ -2,7 +2,6 @@
 title: Research Group is hiring!
 author: PPP
 layout: post
-permalink: /?p=488
 categories:
   - General News
 ---

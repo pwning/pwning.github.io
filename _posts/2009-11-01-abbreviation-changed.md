@@ -2,7 +2,6 @@
 title: Abbreviation changed
 author: PPP
 layout: post
-permalink: /?p=103
 categories:
   - General News
 ---

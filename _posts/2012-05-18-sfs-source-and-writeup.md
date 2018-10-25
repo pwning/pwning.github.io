@@ -2,7 +2,6 @@
 title: sfs source and writeup
 author: ricky
 layout: post
-permalink: /?p=766
 categories:
   - Write-Ups
 ---

@@ -2,7 +2,6 @@
 title: Paradox Conference 2010
 author: PPP
 layout: post
-permalink: /?p=160
 categories:
   - General News
 ---

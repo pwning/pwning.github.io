@@ -2,7 +2,6 @@
 title: Pai Mei on Mac OSX 10.8
 author: awreece
 layout: post
-permalink: /?p=1035
 categories:
   - Report
 ---
