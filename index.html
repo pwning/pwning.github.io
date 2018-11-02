@@ -5,16 +5,16 @@ layout: default
   <div class="sidebar-col">
     <div class="sidebar-title">Recent Posts</div>
     {% for post in site.posts %}
-      <div class="sidebar-link">
-        <div class="sidebar-post-title">{{ post.title }}</div>
-        {% if post.ctf %}<div class="sidebar-post-ctf">{{ post.ctf }}</div>{% endif %}
-        {% if post.year %}<div class="sidebar-post-year">{{ post.year }}</div>{% endif %}
+      <a class="sidebar-link" href="{{ post.url | prepend: site.baseurl }}">
+        <span class="sidebar-post-title">{{ post.title }}</span>
+        {% if post.ctf %}<span class="sidebar-post-ctf">{{ post.ctf }}</span>{% endif %}
+        {% if post.year %}<span class="sidebar-post-year">{{ post.year }}</span>{% endif %}
         {% if post.categories %}
           {% for category in categories %}
             <div class="sidebar-post-category">{{ post.category }}</div>
           {% endfor %}
         {% endif %}
-      </div>
+      </a>
     {% endfor %}
   </div>
   <div class="content-col">

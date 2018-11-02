@@ -1,5 +1,15 @@
 @import 'theme';
 
+// Set general theme settings
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: "Signika";
+	font-size: 20px;
+}
+
+
+
 .site-wrap {
 	display: flex;
 	flex-direction: row;
@@ -12,22 +22,29 @@
 
 			.sidebar-col {
 				display: table-cell;
-				width: 200px;
+				min-width: $sidebar-width;
+				max-width: $sidebar-width;
 				background-color: $color-neutral-04;
 				color: $color-neutral-01;
 			}
 
 			.content-col {
 				display: table-cell;
-				width: 600px;
+				min-width: $content-width;
+				max-width: $content-width;
 				background-color: $color-neutral-01;
 			}
 		}
 	}
 
-	&::before, &::after {
+	&::before {
 		content: "";
-		flex-grow: 1;
+		flex-grow: 3;
+	}
+
+	&::after {
+		content: "";
+		flex-grow: 4;
 	}
 
 	&::before {
