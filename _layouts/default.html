@@ -8,9 +8,8 @@
 		<div class="content-col">{% include header.html %}</div>
 	</div>
     {{ content }}
+	{% include footer.html %}
   </div>
-
-  {% include footer.html %}
 </body>
 <script src="{{ "/js/lightbox2/dist/js/lightbox-plus-jquery.min.js" | prepend: site.baseurl }}" type="text/javascript"></script>
 </html>

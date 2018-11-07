@@ -1,6 +1,11 @@
 @import 'theme';
 
 // Set general theme settings
+html, body, .site-wrap {
+	height: 100%; 
+}
+
+
 body {
 	margin: 0px;
 	padding: 0px;
@@ -8,7 +13,9 @@ body {
 	font-size: 20px;
 }
 
-
+h1 {
+	margin-top: 0px;
+}
 
 .site-wrap {
 	display: flex;
@@ -34,7 +41,7 @@ body {
 		.content-col {
 			padding-top: $padding;
 			width: $content-width;
-			flex-baasis: $content-width;
+			flex-basis: $content-width;
 			flex-grow: 0;
 			background-color: $color-neutral-01;
 			padding-left: $padding;

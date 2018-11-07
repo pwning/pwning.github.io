@@ -1,6 +1,6 @@
-<a href="{{ site.baseurl }}/">Home</a>
-<a href="{{ site.baseurl }}/blog">Blog</a>
-<a href="{{ site.baseurl }}/about">About</a>
-<a href="{{ site.baseurl }}/contact">Contact</a>
-<a href="{{ site.baseurl }}/sponsors">Sponsors</a>
-<a href="http://plaidctf.com">PlaidCTF</a>
+<a class="navigation-link {% if page.url == '/' %}active{% endif %}" href="{{ site.baseurl }}/">Home</a>
+<a class="navigation-link {% if page.url == '/blog'  %}active{% endif %}" href="{{ site.baseurl }}/blog">Blog</a>
+<a class="navigation-link {% if page.url == '/about/' %}active{% endif %}" href="{{ site.baseurl }}/about">About</a>
+<a class="navigation-link {% if page.url == '/contact' %}active{% endif %}" href="{{ site.baseurl }}/contact">Contact</a>
+<a class="navigation-link {% if page.url == '/sponsors' %}active{% endif %}" href="{{ site.baseurl }}/sponsors">Sponsors</a>
+<a class="navigation-link" href="http://plaidctf.com">PlaidCTF</a>

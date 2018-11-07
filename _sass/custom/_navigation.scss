@@ -1,0 +1,19 @@
+
+.site-nav {
+	margin-bottom: $padding;
+
+	.navigation-link {
+		color: $color-blue-03;
+		text-decoration: none;
+		display: inline-block;
+		border-bottom: 2px solid $color-neutral-02;
+
+		&:not(:last-child) {
+			margin-right: $padding;
+		}
+
+		&.active {
+			border-bottom: 2px solid $color-blue-03;
+		}
+	}
+}
