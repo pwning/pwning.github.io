@@ -3,13 +3,11 @@
 {% include head.html %}
 <body class="site{% if site.animated %} animated fade-in-down{% endif %}">
   <div class="site-wrap">
-  	<div class="measure">
-	  	<div class="row">
-		    <div class="sidebar-col"></div>
-			<div class="content-col">{% include header.html %}</div>
-		</div>
-	    {{ content }}
+  	<div class="row">
+	    <div class="sidebar-col"></div>
+		<div class="content-col">{% include header.html %}</div>
 	</div>
+    {{ content }}
   </div>
 
   {% include footer.html %}

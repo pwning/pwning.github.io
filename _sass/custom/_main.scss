@@ -14,44 +14,42 @@ body {
 	display: flex;
 	flex-direction: row;
 
-	.measure {
-		display: table;
+	display: flex;
+	flex-direction: column;
 
-		.row {
-			display: table-row;
+	.row {
+		display: flex;
+		flex-direction: row;
 
-			.sidebar-col {
-				display: table-cell;
-				min-width: $sidebar-width;
-				max-width: $sidebar-width;
-				background-color: $color-neutral-04;
-				color: $color-neutral-01;
-			}
-
-			.content-col {
-				display: table-cell;
-				min-width: $content-width;
-				max-width: $content-width;
-				background-color: $color-neutral-01;
-			}
+		.sidebar-col {
+			padding-top: $padding;
+			width: $sidebar-width;
+			flex-basis: $sidebar-width;
+			flex-grow: 0;
+			background-color: $color-neutral-04;
+			color: $color-neutral-01;
+			padding-right: $padding;
 		}
-	}
 
-	&::before {
-		content: "";
-		flex-grow: 3;
-	}
+		.content-col {
+			padding-top: $padding;
+			width: $content-width;
+			flex-baasis: $content-width;
+			flex-grow: 0;
+			background-color: $color-neutral-01;
+			padding-left: $padding;
+		}
 
-	&::after {
-		content: "";
-		flex-grow: 4;
-	}
+		&::before {
+			content: "";
+			flex-grow: 3;
+			background-color: $color-neutral-04;
+		}
 
-	&::before {
-		background-color: $color-neutral-04;
-	}
-
-	&::after {
-		background-color: $color-neutral-01;
+		&::after {
+			content: "";
+			flex-grow: 4;
+			background-color: $color-neutral-01;
+		}
 	}
 }
