@@ -7,7 +7,7 @@ layout: default
 {% assign minutes = 1 %}
 {% endif %}
 
-{% include key.html header="test1" %}
+{% include key.html header=page.title %}
 <div class="row">
   <div class="sidebar-col">
     <div class="sidebar-title">
@@ -18,21 +18,6 @@ layout: default
     </div>
   </div>
   <div class="content-col">
-    <div class="post-header mb2">
-      <h1>{{ page.title }}</h1>
-      <span class="post-meta">{{ page.date | date: "%b %-d, %Y" }}</span><br>
-      {% if page.update_date %}
-        <span class="post-meta">Updated: {{ page.update_date | date: "%b %-d, %Y" }}</span><br>
-      {% endif %}  
-      <span class="post-meta small">
-      {% if page.minutes %}
-        {{ page.minutes }} minute read
-      {% else %}
-        {{ minutes }} minute read
-      {% endif %}
-      </span>
-    </div>
-
     <article class="post-content">
       {{ content }}
     </article>

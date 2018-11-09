@@ -4,7 +4,7 @@ layout: default
 {% include key.html header="The Plaid Parliament of Pwning" %}
 <div class="row">
   <div class="sidebar-col">
-    <div class="sidebar-title">Recent Posts</div>
+    <h2 class="sidebar-title">Recent Posts</h2>
     {% for post in site.posts limit:10 %}
       <a class="sidebar-link" href="{{ post.url | prepend: site.baseurl }}">
         <span class="sidebar-post-title">{{ post.title }}</span>

@@ -1,0 +1,23 @@
+.sidebar-link {
+	display: flex;
+	text-decoration: none;
+	margin-bottom: $padding/2;
+
+	&:hover {
+		margin-bottom: $padding/2-2px;
+		border-bottom: 2px solid $color-neutral-03;
+	}
+
+	span:not(:last-child) {
+		margin-right: $padding;
+	}
+
+	.sidebar-post-title {
+		color: $color-neutral-01;
+		flex-grow: 1;
+	}
+
+	.sidebar-post-ctf, .sidebar-post-year {
+		color: $color-neutral-03;
+	}
+}
