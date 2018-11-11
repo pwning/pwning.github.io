@@ -49,7 +49,7 @@ The function takes the first argument to the command as a file name, and reads 
 
 Looking through more functions, we find a vulnerable code in **cat**, where it uses <span class="lang:default decode:true  crayon-inline ">sprintf</span> with the file contents buffer as its format string (aka trivial buffer overflow).
 
-{% include figure.html src="https://www.bpak.org/blog/wp-content/uploads/2015/03/uspace_3.png" lightbox="quincy-center" title=""cat" operation (open syscall followed by read syscall)" %}
+{% include figure.html src="https://www.bpak.org/blog/wp-content/uploads/2015/03/uspace_3.png" lightbox="quincy-center" title="\"cat\" operation (open syscall followed by read syscall)" %}
 
 **v12** is a stack buffer of size 256 bytes, and it's located **bp-0x118**. Also, we noticed that the NX was disabled on this binary, so we could easily jump to our buffer (such as one of our arguments for the command). Conveniently, the pointers to our arguments are on the stack, so we can do a simple pop/pop/ret gadget to get an arbitrary code execution!
 
