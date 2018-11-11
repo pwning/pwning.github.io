@@ -10,12 +10,7 @@ layout: default
 {% include key.html header=page.title %}
 <div class="row">
   <div class="sidebar-col">
-    <div class="sidebar-title">
-      {% if page.authors %} 
-        <div class="info-line">Authors: {% for author in page.authors %} <div class="author-list-item">{{ author}}</div> {% endfor %} </div>
-      {% endif %}
-      {% if page.date %} <div class="info-line">Date: {{ page.date | date: "%b %-d, %Y" }}</div> {% endif %}
-    </div>
+    {% include post_info.html post=page %}
   </div>
   <div class="content-col">
     <article class="post-content">

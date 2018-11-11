@@ -5,7 +5,7 @@ $key-height: 48px;
 	//display: flex;
 	position: relative;
 	z-index: 1;
-	height: 120px;
+	height: 105px;
 
 	&.sidebar-col {
 		flex-basis: $sidebar-width;
@@ -30,7 +30,7 @@ $key-height: 48px;
 
 	.key-header {
 		position: absolute;
-		bottom: 40px;
+		bottom: 25px;
 		z-index: 2;
 		color: $color-neutral-01;
 		font-size: $font-size-header-large; 

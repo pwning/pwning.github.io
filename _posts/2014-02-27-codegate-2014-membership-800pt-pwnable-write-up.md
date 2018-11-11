@@ -2,11 +2,13 @@
 title: 'Codegate 2014: membership (800pt pwnable) write-up'
 author: PPP
 layout: post
+excerpt_separator: <!--more-->
 categories:
   - General News
 ---
 This is a write-up for 800 point pwnable challenge called &#8216;membership&#8217; from Codegate CTF 2014 Pre-qual round. PPP was the only solver for this challenge during the competition, so I have decided to do a write-up for the challenge. Enjoy.  (awesie and ricky solved it during the competition.)
 
+<!--more-->
 
 **=== If you have any trouble with poor formatting here, you can read the original post at <a href="https://www.bpak.org/blog/2014/02/codegate-2014-membership-800pt-pwnable-write-up" target="_blank">this blog</a> ===**
 

@@ -21,6 +21,18 @@ p:first-child {
 	margin-top: 0px;
 }
 
+a {
+	color: $color-blue-03;
+	text-decoration: none;
+
+	&:visited {
+		color: $color-blue-03;
+	}
+	&:hover, &:visited:hover {
+		color: $color-blue-02;
+	}
+}
+
 .site-wrap {
 	display: flex;
 	flex-direction: row;

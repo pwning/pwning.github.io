@@ -2,12 +2,14 @@
 title: '[bkpCTF-2015] braintree (tz) write-up'
 author: PPP
 layout: post
+excerpt_separator: <!--more-->
 categories:
   - CTF
   - Write-Ups
 date: 2015-03-07 13:37:02
 ---
 This is a write-up for **braintree** challenge, which is the last part of 3-chained pwnable challenge from <a href="https://ctftime.org/event/163" target="_blank">Boston Key Party CTF</a> last weekend. You can read about the other parts here: <a href="http://ppp.cylab.cmu.edu/wordpress/?p=1224" target="_blank">quincy-center</a>, <a href="http://ppp.cylab.cmu.edu/wordpress/?p=1229" target="_blank">quincy-adams</a>. You can also read from the <a href="https://www.bpak.org/blog/2015/03/bkpctf-2015-braintree-tz-write-up/" target="_blank">origial post</a>.
+<!--more-->
 
 The binaries were packaged into a <a href="https://www.bpak.org/blog/wp-content/uploads/2015/03/zenhv-e941cb4585deafcf5a1b86050a3ebe7a.gz" target="_blank">tar ball</a>.
 

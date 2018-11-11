@@ -1,0 +1,6 @@
+<div class="sidebar-title">
+  {% if include.post.authors %} 
+    <div class="info-line">Authors: {% for author in include.post.authors %} <div class="author-list-item">{{ author}}</div> {% endfor %} </div>
+  {% endif %}
+  {% if include.post.date %} <div class="info-line">Date: {{ include.post.date | date: "%b %-d, %Y" }}</div> {% endif %}
+</div>
