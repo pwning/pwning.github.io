@@ -1,5 +1,5 @@
 ---
-title: 'braintree (tz) write-up'
+title: 'braintree (tz)'
 author:
   - Brian Pak (Cai)
 layout: post

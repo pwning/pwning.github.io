@@ -1,9 +1,20 @@
-<div class="row key-header">
+<div class="row key-header desktop-only">
 	<div class="sidebar-col sidebar-override key-component">
 	</div>
 	<div class="content-col key-component">
 		<div class="key-sub-header">{{ include.subheader }}</div>
 		<div class="key-header">{{ include.header }}</div>
 		{% include key-svg.html %}
+	</div>
+</div>
+<div class="row key-bar phone-only">
+	<div class="sidebar-col"></div>
+	<div class="content-col">
+		<div class="key-top">
+			{{ include.subheader }}
+		</div>
+		<div class="key-bottom">
+			{{ include.header }}
+		</div>
 	</div>
 </div>

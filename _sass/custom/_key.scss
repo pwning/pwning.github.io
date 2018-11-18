@@ -48,3 +48,31 @@ $key-height: 48px;
     	// transform: translateX(-0.5px)
 	}
 }
+
+.key-bar {
+	background-color: $color-neutral-04;
+	color: $color-neutral-01;
+
+	.content-col {
+		&.content-col.content-col.content-col {
+			padding: 0px;
+		}
+
+		.key-top {
+			background-color: $color-key-dark;
+			min-height: 32px;
+		}
+
+		.key-bottom {
+			background-color: $color-key-light;
+			padding-left: 16px;
+			padding-right: 16px;
+			min-height: 64px;
+			font-size: 24px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}

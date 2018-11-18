@@ -1,5 +1,5 @@
 ---
-title: 'Codegate 2014: membership (800pt pwnable) write-up'
+title: 'membership'
 layout: post
 excerpt_separator: <!--more-->
 authors:

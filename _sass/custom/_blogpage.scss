@@ -1,6 +1,31 @@
 .read-more {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+}
+
+.blog-entry {
+	.blog-header {
+		font-size: $font-size-header-large;
+		color: $color-red-01;
+	}
+
+	.blog-excerpt.blog-excerpt.blog-excerpt {
+		& >* {
+			padding-top: 2*$padding;
+			padding-bottom: 2*$padding;
+		}
+
+		&>.sidebar-col, &::before {
+			border-bottom: 1px solid $color-neutral-03;
+		}
+
+		&>.content-col, &::after {
+			border-bottom: 1px solid $color-neutral-02;
+		}
+
+		&>.content-col>p {
+			background: #fff;
+			padding: $padding;
+		}
+	}
 }

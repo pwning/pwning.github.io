@@ -1,9 +1,13 @@
+$color-key-light: #de0000;
+$color-key-dark: #9c0000;
+
+
 $color-neutral-01: #E5E5E5;
 $color-neutral-02: #9E9E9E;
 $color-neutral-03: #414141;
 $color-neutral-04: #222222;
 
-$color-red-01: #ce0303;
+$color-red-01: $color-key-dark;
 
 $color-blue-01: #64B5F6;
 $color-blue-02: #42A5F5;

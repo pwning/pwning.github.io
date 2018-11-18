@@ -1,5 +1,5 @@
 ---
-title: 'quincy-center (uspace) write-up'
+title: 'quincy-center (uspace)'
 author:
   - Brian Pak (Cai)
 layout: post

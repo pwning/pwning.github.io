@@ -1,5 +1,5 @@
 ---
-title: 'quincy-adams (kspace) write-up'
+title: 'quincy-adams (kspace)'
 author:
   - Brian Pak (Cai)
 layout: post

@@ -1,5 +1,5 @@
 ---
-title: 'GiTS 2014: gitsmsg'
+title: 'gitsmsg'
 authors:
   - Alex Reece <awreece>
 layout: post

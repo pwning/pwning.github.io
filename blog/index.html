@@ -3,21 +3,32 @@ layout: default
 title: Blog
 ---
 {% for post in paginator.posts %}
-	{% include key.html header=post.title %}
-	<div class="row">
-		<div class="sidebar-col">
-			{% include post_info.html post=post %}
-		</div>
-		<div class="content-col">
-			{{ post.excerpt }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="sidebar-col"></div>
-		<div class="content-col read-more">
-			<a href="{{ post.url | prepend: site.baseurl }}">
-				Continue Reading &rarr;
-			</a>
+	<!-- { include key.html header=post.title } -->
+	<div class="blog-entry">
+		<div class="row blog-excerpt">
+			<div class="sidebar-col">
+				{% include post_info.html post=post %}
+			</div>
+			<div class="content-col">
+				<div class="blog-header">{{ post.title }}</div>
+				<p>
+
+					<!-- {% comment %}
+					 We do this nonsense so that we can normalize
+						previews a bit without stripping out all tags
+					{% endcomment %} -->
+
+					{{ post.excerpt 
+						| replace: '<p>', '' 
+						| replace: '</p>', '' 
+						| replace: '<h2', '<span class="header-2"'
+						| replace: '</h2>', '</span>'
+					}}
+				</p>
+				<a href="{{ post.url | prepend: site.baseurl }}">
+					Continue Reading &rarr;
+				</a>
+			</div>
 		</div>
 	</div>
 {% endfor %}
