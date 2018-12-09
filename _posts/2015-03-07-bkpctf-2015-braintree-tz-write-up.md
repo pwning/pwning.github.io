@@ -6,7 +6,7 @@ layout: post
 excerpt_separator: <!--more-->
 categories:
   - Pwn
-ctf: Boston Key Party CTF
+ctf: Boston Key Party
 year: 2015
 ---
 This is a write-up for **braintree** challenge, which is the last part of 3-chained pwnable challenge from [Boston Key Party CTF](https://ctftime.org/event/163) last weekend.  _You can also read this content from the [origial post](https://www.bpak.org/blog/2015/03/bkpctf-2015-braintree-tz-write-up/)_.

@@ -6,7 +6,7 @@ authors:
   - Brian Pak (Cai)
 categories:
   - Pwn
-ctf: Codegate CTF Quals
+ctf: Codegate Quals
 year: 2014
 ---
 This is a write-up for 800 point pwnable challenge called "membership" from Codegate CTF 2014 Pre-qual round. PPP was the only solver for this challenge during the competition, so I have decided to do a write-up for the challenge. Enjoy.  (awesie and ricky solved it during the competition.)

@@ -5,7 +5,7 @@ author:
 layout: post
 categories:
   - Pwn
-ctf: Boston Key Party CTF
+ctf: Boston Key Party
 year: 2015
 ---
 This is a write-up for **quincy-center** challenge, which is the first part of 3-chained pwnable challenge from [Boston Key Party CTF](https://ctftime.org/event/163) last weekend. _You can also read from the [origial post](https://www.bpak.org/blog/2015/03/bkpctf-2015-quincy-center-uspace-write-up/)_.
