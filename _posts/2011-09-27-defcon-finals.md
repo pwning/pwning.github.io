@@ -3,7 +3,7 @@ title: Defcon Finals
 layout: post
 authors: []
 categories: []
-ctf: DEFCON CTF Finals
+ctf: DEFCON Finals
 year: 2011
 ---
 After winning iCTF and Codegate, PPP had already prequalified for Defcon19. Of course, we couldn't be lamers so we also qualified through the normal prequal round (which makes us the first team to ever _triple_ qualify for Defcon).

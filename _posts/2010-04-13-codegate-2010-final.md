@@ -2,7 +2,7 @@
 title: Codegate 2010 Final
 authors: []
 layout: post
-ctf: Codegate CTF Finals
+ctf: Codegate Finals
 year: 2010
 categories: []
 ---

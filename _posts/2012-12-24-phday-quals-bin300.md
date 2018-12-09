@@ -2,7 +2,7 @@
 title: PHDay quals bin300
 layout: post
 authors: []
-ctf: Positive Hack Days CTF Quals
+ctf: Positive Hack Days Quals
 year: 2012
 ---
 The recent Positive Hack Days qualifier round had a lot of fun problems. Binary 300 was the only problem that was solved in the competition but not solved by PPP. It was also a very nice crypto problem which was a lot of fun. We ended up having a brute forcer finish the challenge a couple hours too late, which got me interested in seeing how fast a brute forcer could go, if we had more time to write it.

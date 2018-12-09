@@ -3,7 +3,7 @@ title: javascriptmd
 layout: post
 authors:
   - zoaedk
-ctf: SmooCon CTF Warmup
+ctf: SmooCon Warmup
 year: 2011
 categories:
   - Pwn

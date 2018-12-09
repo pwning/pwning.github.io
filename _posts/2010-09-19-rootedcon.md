@@ -2,7 +2,7 @@
 title: RootedCON
 authors: []
 layout: post
-ctf: RootedCON CTF
+ctf: RootedCON
 year: 2010
 categories: []
 ---

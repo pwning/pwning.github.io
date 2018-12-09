@@ -2,7 +2,7 @@
 title: Paradox Conference 2010
 authors: []
 layout: post
-ctf: Paradox CTF Qualifier
+ctf: Paradox Qualifier
 year: 2010
 categories: []
 ---

@@ -3,7 +3,7 @@ title: Positive Hack Days
 author: PPP
 layout: post
 categories: []
-ctf: Positive Hack Days CTF
+ctf: Positive Hack Days
 year: 2011
 ---
 On May 18th, PPP was in Moscow playing in the Positive Hack Days CTF competition. This competition was organized by Positive Technologies, a computer security firm located in Russia. Andrew, Brian, David, Ricky, and Tyler traveled to Russia to participate in the challenge.

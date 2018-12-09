@@ -2,7 +2,7 @@
 title: Codegate 2010 Pre-Qual
 authors: []
 layout: post
-ctf: Codegate CTF Quals
+ctf: Codegate Quals
 year: 2010
 categories: []
 ---

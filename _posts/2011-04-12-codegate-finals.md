@@ -4,7 +4,7 @@ author: PPP
 layout: post
 authors: []
 categories: []
-ctf: Codegate CTF Finals
+ctf: Codegate Finals
 year: 2011
 ---
 As you may [remember](/ctf/write-ups/2011/03/09/codegate-2011/), PPP qualified this year for the annual Korean Codegate competition. This is one of the most popular CTF competitions in the world, which made it an impressive feat to even make it to the final round for a second time.

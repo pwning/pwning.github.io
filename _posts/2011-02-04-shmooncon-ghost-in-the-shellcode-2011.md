@@ -3,7 +3,7 @@ title: taped
 authors:
   - zoaedk
 layout: post
-ctf: SmooCon Ghost in the Shellcode
+ctf: Ghost in the Shellcode
 year: 2011
 categories:
   - Pwn
