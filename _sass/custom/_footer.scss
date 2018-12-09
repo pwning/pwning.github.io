@@ -1,6 +1,14 @@
-.footer {
+.spacer {
 	flex-grow: 1;
+	.sidebar-col, .content-col {
+		padding: 0px;
+	}
 
+	.content-col.content-col.content-col {
+		flex-grow: 1;
+	}
+}
+.footer {
 	.signature {
 		display: flex;
 		align-items: flex-end;

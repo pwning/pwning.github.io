@@ -11,6 +11,10 @@
 }
 
 @include phone {
+	.site-wrap .row:before, .site-wrap .row:after {
+		content: unset !important;
+	}
+
 	.sidebar-col:empty {
 		display: none;
 	}

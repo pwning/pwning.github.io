@@ -2,8 +2,8 @@
 layout: default
 title: Blog
 ---
+{% include key.html header="Blog Posts" %}
 {% for post in paginator.posts %}
-	<!-- { include key.html header=post.title } -->
 	<div class="blog-entry">
 		<div class="row blog-excerpt">
 			<div class="sidebar-col">

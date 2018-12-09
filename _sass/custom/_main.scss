@@ -47,14 +47,12 @@ a {
 		}
 
 		.sidebar-col {
-			padding-top: $padding;
+			padding: $padding;
 			width: $sidebar-width;
 			flex-basis: $sidebar-width;
 			flex-grow: 0;
 			background-color: $color-neutral-04;
 			color: $color-neutral-01;
-			padding-left: $padding;
-			padding-right: $padding;
 
 			@include phone {
 				flex-basis: auto;
@@ -63,13 +61,11 @@ a {
 		}
 
 		.content-col {
-			padding-top: $padding;
+			padding: $padding;
 			max-width: $content-width;
 			flex-basis: $content-width;
 			flex-grow: 0;
 			background-color: $color-neutral-01;
-			padding-left: $padding;
-			padding-right: $padding;
 			overflow-x: scroll;
 
 			@include phone {

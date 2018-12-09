@@ -12,6 +12,7 @@ $key-height: 48px;
 	}
 		
 	&.content-col {
+		overflow: visible;
 		flex-basis: $content-width;
 	}
 
@@ -22,7 +23,7 @@ $key-height: 48px;
 	// derived value from the original svg. 
 	.key-sub-header {
 		position: absolute;
-		bottom: 94px;
+		bottom: 105px;
 		z-index: 2;
 		color: $color-neutral-01;
 		font-size: $font-size-header-small; 
@@ -30,7 +31,7 @@ $key-height: 48px;
 
 	.key-header {
 		position: absolute;
-		bottom: 25px;
+		bottom: 35px;
 		z-index: 2;
 		color: $color-neutral-01;
 		font-size: $font-size-header-large; 
