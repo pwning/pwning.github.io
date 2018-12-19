@@ -4,11 +4,6 @@
 }
 
 .blog-entry {
-	.blog-header {
-		font-size: $font-size-header-large;
-		color: $color-red-01;
-	}
-
 	.blog-excerpt.blog-excerpt.blog-excerpt {
 		& >* {
 			padding-top: 2*$padding;
@@ -26,6 +21,12 @@
 		&>.content-col>p {
 			background: #fff;
 			padding: $padding;
+		}
+
+		.content-col {
+			h2 {
+				margin-top: 0px;
+			}
 		}
 	}
 }

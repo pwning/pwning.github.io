@@ -2,11 +2,15 @@
 	display: flex;
 	text-decoration: none;
 	margin-bottom: $padding/2;
-	font-size: 14px;
 
-	&:hover {
-		margin-bottom: $padding/2-2px;
-		border-bottom: 2px solid $color-neutral-03;
+	&::before {
+		content: "\2022";
+		color: $color-blue-02;
+		padding: 0 $padding/2;
+	}
+
+	span:not(:first-child) {
+		text-align: right;
 	}
 
 	span:not(:last-child) {
@@ -14,15 +18,17 @@
 	}
 
 	.sidebar-post-title {
-		color: $color-neutral-01;
+		color: $color-neutral-03;
 		flex-grow: 1;
 	}
 
-	.sidebar-post-ctf, .sidebar-post-year {
-		color: $color-neutral-03;
+	&:hover {
+		.sidebar-post-title {
+			color: $color-neutral-02;
+		}
 	}
-}
 
-.sidebar-title {
-	padding-bottom: $padding;
+	.sidebar-post-ctf, .sidebar-post-year {
+		color: $color-neutral-02;
+	}
 }

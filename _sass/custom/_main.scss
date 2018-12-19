@@ -17,6 +17,11 @@ h1 {
 	margin-top: 0px;
 }
 
+h2 {
+	font-size: $font-size-header-large;
+	color: $color-red-01;
+}
+
 p:first-child {
 	margin-top: 0px;
 }
@@ -30,6 +35,12 @@ a {
 	}
 	&:hover, &:visited:hover {
 		color: $color-blue-02;
+	}
+}
+
+.page-title.page-title.page-title {
+	&, &:hover {
+		color: $color-neutral-01;
 	}
 }
 
