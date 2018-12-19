@@ -1,19 +1,11 @@
 ---
-layout: page
-title: About Pixyll
+title: About Us
 permalink: /about/
+layout: simple
 ---
 
-This Jekyll theme was crafted with <3 by [John Otander](http://johnotander.com)
-([@4lpine](https://twitter.com/4lpine)).
+Capture The Flag (CTF) is a computer security wargame, where each participating individual or team competes to find the flag (key) by solving problems or hacking the prepared boxes. Usually, it involves many security fields, such as web hacking, binary reverse engineering, exploitation, forensics, cryptography, etc.
 
-Checkout the [Github repository](https://github.com/johnotander/pixyll) to download it,
-request a feature, report a bug, or contribute. It's free, and open source
-([MIT](http://opensource.org/licenses/MIT)).
+Plaid Parliament of Pwning is a CTF team from Carnegie Mellon University.<br />(Formed in September 2009)
 
-Thanks to the following:
-
-* [BASSCSS](http://basscss.com)
-* [Jekyll](http://jekyllrb.com)
-* [Refills](http://refills.bourbon.io/)
-* [Type Scale](http://type-scale.com/)
+{% include social_links.html %}

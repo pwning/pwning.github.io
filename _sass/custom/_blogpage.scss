@@ -1,0 +1,32 @@
+.read-more {
+	display: flex;
+	flex-direction: row;
+}
+
+.blog-entry {
+	.blog-excerpt.blog-excerpt.blog-excerpt {
+		& >* {
+			padding-top: 2*$padding;
+			padding-bottom: 2*$padding;
+		}
+
+		&>.sidebar-col, &::before {
+			border-bottom: 1px solid $color-neutral-03;
+		}
+
+		&>.content-col, &::after {
+			border-bottom: 1px solid $color-neutral-02;
+		}
+
+		&>.content-col>p {
+			background: #fff;
+			padding: $padding;
+		}
+
+		.content-col {
+			h2 {
+				margin-top: 0px;
+			}
+		}
+	}
+}

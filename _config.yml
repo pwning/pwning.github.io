@@ -1,10 +1,10 @@
 # Site settings
-title:       Pixyll
-email:       your_email@example.com
-author:      John Otander
-description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
+title:       "Plaid Parliament of Pwning"
+email:       admin@pwning.net
+author:      PPP
+description: "CTF Team @ Carnegie Mellon University"
 baseurl:     ""
-url:         "http://pixyll.com"
+url:         "http://www.pwning.net"
 
 # Google analytics
 google_analytics: UA-53548208-1
@@ -17,12 +17,13 @@ show_social_icons:  false
 
 # Disqus post comments
 # (leave blank to disable Disqus)
-disqus_shortname:
+disqus_shortname: pppblogcomments
 
 # Social icons
-github_username:
+github_username: pwning
+bitbucket_username:
 stackoverflow_id:
-twitter_username:
+twitter_username: plaidctf
 google_plus_id:
 linkedin_username:
 angellist_username:
@@ -50,8 +51,18 @@ markdown:     kramdown
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
 permalink:    pretty
-paginate:     4
+paginate:     10
+paginate_path: "/blog/page:num"
 sass:
   compressed: true
 gems:
   - jekyll-sitemap
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1

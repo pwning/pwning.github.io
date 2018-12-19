@@ -1,0 +1,83 @@
+.site-title {
+	text-align: right;
+
+	@include phone {
+		text-align: center;
+		display: flex;
+		flex-direction: row;
+
+
+		$icon-size: 24px;
+
+		.nav-burger {
+			flex-basis: 0;
+			padding-top: 2px;
+			pointer-events: all;
+			font-size: $icon-size;
+			padding: 0 $padding/2;
+		}
+
+		.ppp-header {
+			flex-grow: 1;
+			// Needed to compensate for the icon
+			margin-left: $icon-size + $padding;
+		}
+	}
+}
+
+.site-nav {
+	@include phone {
+		transition: max-height .2s ease-in-out, padding .2s ease-in-out;
+
+		&.site-nav.site-nav.site-nav {
+			max-height: 0px;
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}
+
+		&.active.active.active.active {
+			max-height: 200px;
+			padding: $padding;
+		}
+
+		.navigation-contents {
+			display: flex;
+			flex-direction: column;
+			max-width: 50%;
+			margin-left: auto;
+
+			.navigation-link {
+				border-bottom: 0px;
+				text-align: right;
+				padding-right: 4px;
+
+				// For precedence
+				&:not(:last-child), &:last-child {
+					border-right: 2px solid $color-neutral-02;
+					margin-right: 6px + $padding;
+				}
+
+				&.active {
+					border-right-width: 8px;
+					border-color: $color-blue-03;
+					margin-right: $padding;
+				}
+			}
+		}
+	}
+
+	.navigation-link {
+		color: $color-blue-03;
+		text-decoration: none;
+		display: inline-block;
+		border-bottom: 2px solid $color-neutral-02;
+
+		&:not(:last-child) {
+			margin-right: $padding;
+		}
+
+		&.active {
+			border-color: $color-blue-03;
+		}
+	}
+}

@@ -3,15 +3,10 @@
 {% include head.html %}
 <body class="site{% if site.animated %} animated fade-in-down{% endif %}">
   <div class="site-wrap">
-    {% include header.html %}
-
-    <div class="post p2 p-responsive wrap" role="main">
-      <div class="measure">
-        {{ content }}
-      </div>
-    </div>
+	{% include header.html %}
+    {{ content }}
+	{% include footer.html %}
   </div>
-
-  {% include footer.html %}
 </body>
+<script src="{{ "/js/lightbox2/dist/js/lightbox-plus-jquery.min.js" | prepend: site.baseurl }}" type="text/javascript"></script>
 </html>

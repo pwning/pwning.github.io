@@ -1,0 +1,79 @@
+$key-height: 48px;
+
+// I hate css
+.key-component.key-component.key-component.key-component {
+	//display: flex;
+	position: relative;
+	z-index: 1;
+	height: 105px;
+
+	&.sidebar-col {
+		flex-basis: $sidebar-width;
+	}
+		
+	&.content-col {
+		overflow: visible;
+		flex-basis: $content-width;
+	}
+
+	// We want to position the [sub]header atop the darkened portion of the key's
+	// shaft. In order to do this, we need it to be either position relative or
+	// position absolute. Since by making it position absolute we can more 
+	// accurately set the baseline, we do that here. Note that the 94px is a 
+	// derived value from the original svg. 
+	.key-sub-header {
+		position: absolute;
+		bottom: 105px;
+		z-index: 2;
+		color: $color-neutral-01;
+		font-size: $font-size-header-small; 
+	}
+
+	.key-header {
+		position: absolute;
+		bottom: 35px;
+		z-index: 2;
+		color: $color-neutral-01;
+		font-size: $font-size-header-large; 
+	}
+
+	.key {
+		position: absolute;
+		right: -40px;
+		top: 0px;
+		z-index: 1;
+		filter: drop-shadow(0px 2px 2px #000);
+		//float: right;
+    	// clip-path: inset(-5px 0px -5px 0px);
+    	// This is a hack becaue the svg is not quite rendering to the edge of where it should
+    	// transform: translateX(-0.5px)
+	}
+}
+
+.key-bar {
+	background-color: $color-neutral-04;
+	color: $color-neutral-01;
+
+	.content-col {
+		&.content-col.content-col.content-col {
+			padding: 0px;
+		}
+
+		.key-top {
+			background-color: $color-key-dark;
+			min-height: 32px;
+		}
+
+		.key-bottom {
+			background-color: $color-key-light;
+			padding-left: 16px;
+			padding-right: 16px;
+			min-height: 64px;
+			font-size: 24px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}

@@ -1,0 +1,47 @@
+code {
+	font-family:'Bitstream Vera Sans Mono','Courier', monospace;
+}
+
+figure.highlight, div.highlight {
+	font-size: 16px;
+	padding: $padding;
+	margin: $padding;
+	background-color: $color-neutral-04;
+	color: $color-neutral-01;
+	overflow: scroll;
+	border-radius: $border-radius; 
+
+	.lineno {
+		margin: 3px;
+		font-size: 16px;
+		color: $color-syntax-comment; 
+	}
+
+	pre {
+		margin: 0px;
+	}
+
+	.c, .cm, .cp, .c1, .cs {
+		color: $color-syntax-comment; 
+	}
+	.k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .nt {
+		color: $color-syntax-key-word; 
+	}
+	.m, .mf, .mh, .mi, .mo {
+		color: $color-syntax-number; 
+	}
+	.s, .sb, .sc, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss {
+		color: $color-syntax-strings;
+	}
+	.nf, .na, .nc {
+		color: $color-syntax-function; 
+	}
+	.css .k, .nb, .kd, .n {
+		color: $color-syntax-builtin; 
+	}
+}
+
+
+.gutter, .rouge-gutter {
+	vertical-align: top;
+}
