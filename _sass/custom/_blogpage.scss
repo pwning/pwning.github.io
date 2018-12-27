@@ -19,8 +19,9 @@
 		}
 
 		&>.content-col>p {
-			background: #fff;
+			background: $color-neutral-00;
 			padding: $padding;
+			border-radius: $border-radius;
 		}
 
 		.content-col {
@@ -28,5 +29,21 @@
 				margin-top: 0px;
 			}
 		}
+	}
+}
+
+.page-navigation {
+	display: flex;
+	align-items: right;
+
+	.spacer {
+		flex-grow: 1;
+		text-align: right;
+	}
+
+	.navigation {
+		background-color: $color-neutral-00;
+		border-radius: $border-radius;
+		padding: $padding/2;
 	}
 }
