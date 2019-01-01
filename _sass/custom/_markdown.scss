@@ -1,7 +1,19 @@
 
 // Don't let the code blocks overflow the page
 .highlight {
-	pre {
-		overflow: scroll;
+	&>pre.highlight {
+		overflow-x: auto;
+
+		&::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: $color-neutral-04;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: $color-neutral-03;
+		}		
 	}
 }
