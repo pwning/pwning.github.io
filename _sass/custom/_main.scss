@@ -77,7 +77,6 @@ a {
 			flex-basis: $content-width;
 			flex-grow: 0;
 			background-color: $color-neutral-01;
-			overflow-x: scroll;
 
 			@include phone {
 				flex-basis: auto;

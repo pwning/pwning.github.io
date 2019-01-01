@@ -4,9 +4,22 @@
 }
 
 .blog-entry {
+	.blog-title.blog-title.blog-title {
+		& >* {
+			padding-top: 2*$padding
+		}
+
+
+		.content-col {
+			h2 {
+				margin-top: 0px;
+				margin-bottom: 0px;
+			}
+		}
+	}
+
 	.blog-excerpt.blog-excerpt.blog-excerpt {
 		& >* {
-			padding-top: 2*$padding;
 			padding-bottom: 2*$padding;
 		}
 
@@ -22,12 +35,6 @@
 			background: $color-neutral-00;
 			padding: $padding;
 			border-radius: $border-radius;
-		}
-
-		.content-col {
-			h2 {
-				margin-top: 0px;
-			}
 		}
 	}
 }

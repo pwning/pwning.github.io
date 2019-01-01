@@ -5,12 +5,17 @@ title: Blog
 {% include key.html header="Blog Posts" %}
 {% for post in paginator.posts %}
 	<div class="blog-entry">
+		<div class="row blog-title">
+			<div class="sidebar-col"></div>
+			<div class="content-col">
+				<h2 class="blog-header">{{ post.title }}</h2>
+			</div>
+		</div>
 		<div class="row blog-excerpt">
 			<div class="sidebar-col">
 				{% include post_info.html post=post %}
 			</div>
 			<div class="content-col">
-				<h2 class="blog-header">{{ post.title }}</h2>
 				<p>
 
 					<!-- {% comment %}
