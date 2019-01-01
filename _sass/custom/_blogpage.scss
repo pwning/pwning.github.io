@@ -19,7 +19,7 @@
 	}
 
 	.blog-excerpt.blog-excerpt.blog-excerpt {
-		& >* {
+		&>.content-col {
 			padding-bottom: 2*$padding;
 		}
 
