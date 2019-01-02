@@ -6,7 +6,7 @@
 .blog-entry {
 	.blog-title.blog-title.blog-title {
 		& >* {
-			padding-top: 2*$padding
+			padding-top: $padding
 		}
 
 
@@ -20,7 +20,7 @@
  
 	.blog-excerpt.blog-excerpt.blog-excerpt {
 		&>.content-col {
-			padding-bottom: 2*$padding;
+			padding-bottom: $padding;
 		}
 
 		&>.sidebar-col, &::before {
