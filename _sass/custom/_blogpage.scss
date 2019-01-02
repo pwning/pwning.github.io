@@ -17,7 +17,7 @@
 			}
 		}
 	}
-
+ 
 	.blog-excerpt.blog-excerpt.blog-excerpt {
 		&>.content-col {
 			padding-bottom: 2*$padding;
@@ -36,6 +36,10 @@
 			padding: $padding;
 			border-radius: $border-radius;
 		}
+	}
+
+	.info-line {
+		text-align: right;
 	}
 }
 
