@@ -19,7 +19,7 @@
 		@include phone {
 			.content-col {
 				margin-top: $padding;
-				background-color: $color-neutral-04;
+				background-color: $color-key-light;
 
 				h2 {
 					color: $color-neutral-01;
@@ -38,9 +38,6 @@
 
 			@include phone {
 				border-bottom: 0;
-				background-color: unset;
-				color: unset;
-				padding-bottom: 0;
 			}
 		}
 
