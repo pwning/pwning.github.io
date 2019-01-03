@@ -5,7 +5,7 @@ layout: default
 <div class="row">
   <div class="sidebar-col"></div>
   <div class="content-col">
-    Welcome to the home page of the PPP, Carnegie Mellon's hacking team. This site hosts all of our announcements, write-ups, and disussions about capture the flag competitions.
+    Welcome to the home page of the <a href="{{ 'about/' | prepend: site.baseurl }}">PPP</a>, Carnegie Mellon's hacking team. This site hosts all of our announcements, write-ups, and disussions about capture the flag competitions.
     <h2 class="sidebar-title">Recent Posts</h2>
     {% for post in site.posts limit:10 %}
       <a class="sidebar-link" href="{{ post.url | prepend: site.baseurl }}">
