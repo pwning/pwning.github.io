@@ -9,11 +9,21 @@
 			padding-top: $padding
 		}
 
-
 		.content-col {
 			h2 {
 				margin-top: 0px;
 				margin-bottom: 0px;
+			}
+		}
+
+		@include phone {
+			.content-col {
+				margin-top: $padding;
+				background-color: $color-neutral-04;
+
+				h2 {
+					color: $color-neutral-01;
+				}
 			}
 		}
 	}
@@ -25,10 +35,21 @@
 
 		&>.sidebar-col, &::before {
 			border-bottom: 1px solid $color-neutral-03;
+
+			@include phone {
+				border-bottom: 0;
+				background-color: unset;
+				color: unset;
+				padding-bottom: 0;
+			}
 		}
 
 		&>.content-col, &::after {
 			border-bottom: 1px solid $color-neutral-02;
+
+			@include phone {
+				border-bottom: none;
+			}
 		}
 
 		&>.content-col>p {
@@ -40,6 +61,10 @@
 
 	.info-line {
 		text-align: right;
+
+		@include phone {
+			text-align: unset;
+		}
 	}
 }
 
