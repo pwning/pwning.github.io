@@ -53,6 +53,8 @@ a {
 		flex-direction: row;
 		flex-shrink: 0;
 
+		background-color: $color-neutral-01;
+
 		@include phone {
 			flex-direction: column;
 		}
@@ -76,7 +78,6 @@ a {
 			max-width: $content-width;
 			flex-basis: $content-width;
 			flex-grow: 0;
-			background-color: $color-neutral-01;
 
 			@include phone {
 				flex-basis: auto;
@@ -93,7 +94,6 @@ a {
 		&::after {
 			content: "";
 			flex-grow: 4;
-			background-color: $color-neutral-01;
 		}
 	}
 }
