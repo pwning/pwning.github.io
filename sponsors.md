@@ -4,6 +4,11 @@ title: Sponsors
 permalink: /sponsors
 ---
 
-## 2019 Sponsors
+## 2019 PlaidCTF Sponsors
 
-We have begun reaching out to potential sponsors for PlaidCTF 2019. If you are interested in sponsoring, or would like to know more, please contact us at [sponsor@plaidctf.com](mailto:sponsor@plaidctf.com).
+The PPP would like to thank all of the sponsors that make PlaidCTF possible.
+
+### Silver Tier
+
+<img class="sponsor silver" src="{{ 'images/sponsor_jane.jpg' | prepend:site.baseurl }}"/>
+<img class="sponsor silver" src="{{ 'images/sponsor_zdi.jpg'  | prepend:site.baseurl }}"/>

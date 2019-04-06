@@ -38,7 +38,16 @@ a {
 	}
 }
 
+.icon {
+	max-height: 24px;
+	margin: 0 $padding;
+}
+
 .page-title.page-title.page-title {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
 	&, &:hover {
 		color: $color-neutral-01;
 	}
