@@ -7,7 +7,7 @@ baseurl:     ""
 url:         "http://www.pwning.net"
 
 # Google analytics
-google_analytics:
+google_analytics: UA-53548208-1
 
 # Optional features
 animated:           false
@@ -51,8 +51,18 @@ markdown:     kramdown
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
 permalink:    pretty
-paginate:     4
+paginate:     10
+paginate_path: "/blog/page:num"
 sass:
   compressed: true
 gems:
   - jekyll-sitemap
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1

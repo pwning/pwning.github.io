@@ -1,24 +1,25 @@
 ---
 layout: default
 ---
-
-<div class="home">
-
-  <div class="posts">
-    {% for post in paginator.posts %}
-      <div class="post py3">
-        <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
-        <a href="{{ post.url | prepend: site.baseurl }}" class="post-link"><h3 class="h1 post-title">{{ post.title }}</h3></a>
-        <p class="post-summary">
-          {% if post.summary %}
-            {{ post.summary }}
-          {% else %}
-            {{ post.excerpt }}
-          {% endif %}
-        </p>
-      </div>
-    {% endfor %}
+{% include key.html header="Home" %}
+<div class="row">
+  <div class="sidebar-col"></div>
+  <div class="content-col main-page">
+    <div class="main-content">
+      Welcome to the home page of the <a href="{{ 'about/' | prepend: site.baseurl }}">PPP</a>, Carnegie Mellon's hacking team. This site hosts all of our announcements, write-ups, and disussions about capture the flag competitions.
+    </div>
+    <div class="main-content main-logo">
+      <img src="{{ '/images/new_logo.png' | prepend: site.baseurl }}"/>
+    </div>
+    <div class="main-content">
+      <h2 class="sidebar-title">Recent Posts</h2>
+      {% for post in site.posts limit:10 %}
+        <a class="sidebar-link" href="{{ post.url | prepend: site.baseurl }}">
+          <span class="sidebar-post-title">{{ post.title }}</span>
+          {% if post.ctf %}<span class="sidebar-post-ctf">{{ post.ctf }}</span>{% endif %}
+          {% if post.year %}<span class="sidebar-post-year">{{ post.year }}</span>{% endif %}
+        </a>
+      {% endfor %}
+    </div>
   </div>
-
-  {% include pagination.html %}
 </div>

@@ -1,28 +1,29 @@
 ---
-title: '[bkpCTF-2015] braintree (tz) write-up'
-author: PPP
+title: 'braintree (tz)'
+author:
+  - Brian Pak (Cai)
 layout: post
+excerpt_separator: <!--more-->
 categories:
-  - CTF
-  - Write-Ups
-date: 2015-03-07 13:37:02
+  - Pwn
+ctf: Boston Key Party
+year: 2015
 ---
-This is a write-up for **braintree** challenge, which is the last part of 3-chained pwnable challenge from <a href="https://ctftime.org/event/163" target="_blank">Boston Key Party CTF</a> last weekend. You can read about the other parts here: <a href="http://ppp.cylab.cmu.edu/wordpress/?p=1224" target="_blank">quincy-center</a>, <a href="http://ppp.cylab.cmu.edu/wordpress/?p=1229" target="_blank">quincy-adams</a>. You can also read from the <a href="https://www.bpak.org/blog/2015/03/bkpctf-2015-braintree-tz-write-up/" target="_blank">origial post</a>.
+This is a write-up for **braintree** challenge, which is the last part of 3-chained pwnable challenge from [Boston Key Party CTF](https://ctftime.org/event/163) last weekend.  _You can also read this content from the [origial post](https://www.bpak.org/blog/2015/03/bkpctf-2015-braintree-tz-write-up/)_.
+<!--more-->
 
-The binaries were packaged into a <a href="https://www.bpak.org/blog/wp-content/uploads/2015/03/zenhv-e941cb4585deafcf5a1b86050a3ebe7a.gz" target="_blank">tar ball</a>.
+The binaries were packaged into a [tar ball](https://www.bpak.org/blog/wp-content/uploads/2015/03/zenhv-e941cb4585deafcf5a1b86050a3ebe7a.gz).
 
-> The MBTA wrote a cool system. It&#8217;s pretty bad though, sometimes the commands work, sometimes they don&#8217;t&#8230;  
+> The MBTA wrote a cool system. It's pretty bad though, sometimes the commands work, sometimes they don't...
 > Exploit it. (tz flag) 54.165.91.92 8899
 
-The goal is to get &#8220;tz&#8221; flag by exploiting the kernel space process.
+The goal is to get "tz" flag by exploiting the kernel space process.
 
-<span style="text-decoration: underline;"><em>If you haven&#8217;t read the previous write-up for quincy-adams, I strongly recommend you to read before continuing with this one as we will assume knowledge gained from it.</em></span>
-
-&nbsp;
+_If you haven't read the previous write-up for quincy-adams, I strongly recommend you to read before continuing with this one as we will assume knowledge gained from it._
 
 As it was mentioned previously, we will be using the same primitive: **hypercall #92**.
 
-Therefore, we have an arbitrary-write-anywhere primitive. So, the question is &#8220;what can we overwrite in **tz** that will get us an arbitrary code execution?&#8221;
+Therefore, we have an arbitrary-write-anywhere primitive. So, the question is "what can we overwrite in **tz** that will get us an arbitrary code execution?"
 
 We started looking at each of the hypercall handlers in **tz**.
 
@@ -30,7 +31,7 @@ We started looking at each of the hypercall handlers in **tz**.
 
 Then, we stumbled upon hypercall #85.
 
-This function seemed like some sort of cleanup (we called it **delete_op** in our shellcode) function for an object used in **tz**. (As I said previously, we didn&#8217;t do much of reversing on **tz** as we did for **uspace** and **kspace**)
+This function seemed like some sort of cleanup (we called it **delete_op** in our shellcode) function for an object used in **tz**. (As I said previously, we didn't do much of reversing on **tz** as we did for **uspace** and **kspace**)
 
 {% include figure.html src="https://www.bpak.org/blog/wp-content/uploads/2015/03/tz_0.png" lightbox="braintree" %}
 
@@ -143,7 +144,7 @@ dq 0x900001000         ; we will put our command here
 {% endhighlight %}
 <br />
 
-At first, we were over ~10 bytes, but once we have &#8220;optimized&#8221; a little bit, we finally got our payload to be 254 bytes!
+At first, we were over ~10 bytes, but once we have "optimized" a little bit, we finally got our payload to be 254 bytes!
 
 Note that we are not using the same shell.asm as before (our new payload is now called shell.asm). However, we can continue to use the same stage1.asm and the python script from **kspace** exploit. For convenience sake, it is also attached here.
 
@@ -178,7 +179,7 @@ f.write(('cat fmt ' + stage1 + '\n').ljust(0x400, '#'))
 <p class="filename">Pwn!</p>
 {% highlight bash %}
 $ nasm shell.asm -f bin -o shell.bin
-$ ls -l shell.bin 
+$ ls -l shell.bin
 -rw-rw-r-- 1 user user 254 Mar 4 21:58 shell.bin
 $ nasm stage1.asm -f bin -o stage1.bin
 $ python pwn_tz.py
@@ -191,10 +192,8 @@ tz
 
 We have abused the hypercall #92 (encrypt) to exploit both kspace and tz, but there may be another way to exploit kspace without going through the hypervisor.
 
-Well, that&#8217;s it for the 3-parts pwnable challenge write-up =)
+Well, that's it for the 3-parts pwnable challenge write-up =)
 
 Thank you for reading, and happy hacking!
-
-&nbsp;
 
 Write-up by Cai (Brian Pak) [[https://www.bpak.org](http://www.bpak.org)]

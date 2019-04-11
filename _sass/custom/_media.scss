@@ -1,0 +1,29 @@
+@mixin phone {
+	@media only screen and (max-width: 1024px) { @content; }
+}
+
+.phone-only {
+	display: none !important;
+}
+
+.desktop-only {
+	display: block;
+}
+
+@include phone {
+	.site-wrap .row:before, .site-wrap .row:after {
+		content: unset !important;
+	}
+
+	.sidebar-col:empty {
+		display: none;
+	}
+
+	.phone-only {
+		display: block !important;
+	}
+
+	.desktop-only {
+		display: none !important; 
+	}
+}

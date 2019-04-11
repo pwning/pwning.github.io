@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+<body class="site{% if site.animated %} animated fade-in-down{% endif %}">
+  <div class="site-wrap">
+  	{% include header.html %}
+	{% include key.html header=page.title %}
+	<div class="row">
+		<div class="sidebar-col"></div>
+		<div class="content-col">
+		    {{ content }}
+		</div>
+	</div>
+	{% include footer.html %}
+  </div>
+</body>
+<script src="{{ "/js/lightbox2/dist/js/lightbox-plus-jquery.min.js" | prepend: site.baseurl }}" type="text/javascript"></script>
+</html>

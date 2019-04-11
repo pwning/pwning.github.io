@@ -1,0 +1,17 @@
+.sidebar-link {
+	display: block;
+}
+
+.main-page {
+	display: flex;
+	flex-direction: column;
+
+	.main-content {
+		flex-grow: 0;
+		flex-shrink: 0;
+	}
+	.main-logo {
+		align-self: center;
+		padding: $padding;
+	}
+}

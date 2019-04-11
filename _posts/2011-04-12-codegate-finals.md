@@ -2,13 +2,12 @@
 title: Codegate Finals
 author: PPP
 layout: post
-permalink: /?p=532
-categories:
-  - General News
+authors: []
+categories: []
+ctf: Codegate Finals
+year: 2011
 ---
-<img class="aligncenter size-full wp-image-533" title="Codegate 2011" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg.png" alt="Codegate 2011" width="544" height="108" />
-
-As you may <a href="http://ppp.cylab.cmu.edu/wordpress/?p=466" target="_blank">remember</a>, PPP qualified this year for the annual Korean Codegate competition. This is one of the most popular CTF competitions in the world, which made it an impressive feat to even make it to the final round for a second time.
+As you may [remember](/ctf/write-ups/2011/03/09/codegate-2011/), PPP qualified this year for the annual Korean Codegate competition. This is one of the most popular CTF competitions in the world, which made it an impressive feat to even make it to the final round for a second time.
 
 This year the team decided to schedule more time in Korea than last year, giving more chances to see Seoul and hang out with other teams. Although we were disappointed that the top teams this year were not as geographically diverse as last year, we were happy that another American team, <a href="http://disekt.inetric.com/" target="_blank">Disekt</a>, was around.
 
@@ -23,7 +22,7 @@ After a <del>bit</del> lot of resting from the long flight from Pittsburgh, we w
     <dt class="wp-caption-dt">
       <img class="size-full wp-image-537  " title="Dinnerz" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg1.jpg" alt="Dinnerz" width="498" height="371" />
     </dt>
-    
+
     <dd class="wp-caption-dd">
       PPP, Disket, and LarsH eating dinner
     </dd>
@@ -43,7 +42,7 @@ After a <del>bit</del> lot of resting from the long flight from Pittsburgh, we w
     <dt class="wp-caption-dt">
       <img class="size-full wp-image-538  " title="PPP" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg2.jpg" alt="PPP" width="498" height="371" />
     </dt>
-    
+
     <dd class="wp-caption-dd">
       PPP getting ready for the big game
     </dd>
@@ -51,7 +50,7 @@ After a <del>bit</del> lot of resting from the long flight from Pittsburgh, we w
 </div>
 
 <p style="text-align: left;">
-  We were a bit disappointed (though not surprised) to see that this year the competition focused less on binaries problems and more on forensics. Of course, that&#8217;s no reason for us not to solve problems! By about half way through the competition, PPP was in the lead.
+  We were a bit disappointed (though not surprised) to see that this year the competition focused less on binaries problems and more on forensics. Of course, that's no reason for us not to solve problems! By about half way through the competition, PPP was in the lead.
 </p>
 
 <p style="text-align: left;">
@@ -63,15 +62,15 @@ After a <del>bit</del> lot of resting from the long flight from Pittsburgh, we w
     <dt class="wp-caption-dt">
       <img class="size-full wp-image-539" title="Scoreboard" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg3.jpg" alt="Scoreboard" width="494" height="464" />
     </dt>
-    
+
     <dd class="wp-caption-dd">
-      Half way through, we&#8217;re in the lead!
+      Half way through, we're in the lead!
     </dd>
   </dl>
 </div>
 
 <p style="text-align: left;">
-  Of course, as we learned last year, it is very easy for one to lose one&#8217;s position, so if we wanted to stay in first, we needed to keep solving problems!
+  Of course, as we learned last year, it is very easy for one to lose one's position, so if we wanted to stay in first, we needed to keep solving problems!
 </p>
 
 <p style="text-align: left;">
@@ -83,9 +82,9 @@ After a <del>bit</del> lot of resting from the long flight from Pittsburgh, we w
     <dt class="wp-caption-dt">
       <img class="size-full wp-image-540" title="Nap" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg4.jpg" alt="Nap" width="450" height="265" />
     </dt>
-    
+
     <dd class="wp-caption-dd">
-      Damnit Andrew, don&#8217;t sleep, we need to solve problems!
+      Damnit Andrew, don't sleep, we need to solve problems!
     </dd>
   </dl>
 </div>
@@ -103,7 +102,7 @@ After a <del>bit</del> lot of resting from the long flight from Pittsburgh, we w
     <dt class="wp-caption-dt">
       <img class="size-full wp-image-541 " title="Final score" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg5.png" alt="Final score" width="480" height="488" />
     </dt>
-    
+
     <dd class="wp-caption-dd">
       Final score
     </dd>
@@ -120,7 +119,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_542" style="width: 525px" class="wp-caption aligncenter">
   <img class="size-full wp-image-542  " title="Final ceremony" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg6.jpg" alt="Final ceremony" width="515" height="384" />
-  
+
   <p class="wp-caption-text">
     Final ceremony
   </p>
@@ -128,7 +127,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_543" style="width: 548px" class="wp-caption aligncenter">
   <img class="size-full wp-image-543   " title="Win" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg7.jpg" alt="Win" width="538" height="358" />
-  
+
   <p class="wp-caption-text">
     It's not a real win without a giant check!
   </p>
@@ -144,7 +143,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_550" style="width: 586px" class="wp-caption aligncenter">
   <a href="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg131.jpg"><img class="size-full wp-image-550 " title="HFS" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg131.jpg" alt="HFS" width="576" height="432" /></a>
-  
+
   <p class="wp-caption-text">
     HFS
   </p>
@@ -152,7 +151,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_544" style="width: 548px" class="wp-caption aligncenter">
   <img class="size-full wp-image-544  " title="Disekt" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg8.jpg" alt="Disekt" width="538" height="403" />
-  
+
   <p class="wp-caption-text">
     Some members of Disekt with Fairuzan, an organizer
   </p>
@@ -160,7 +159,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_545" style="width: 528px" class="wp-caption aligncenter">
   <img class="size-full wp-image-545   " title="Brian and Beist" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg9.jpg" alt="Brian and Beist" width="518" height="389" />
-  
+
   <p class="wp-caption-text">
     Brian and Beist
   </p>
@@ -168,7 +167,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_546" style="width: 528px" class="wp-caption aligncenter">
   <img class="size-full wp-image-546  " title="Sutegoma2" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg10.jpg" alt="Sutegoma2" width="518" height="389" />
-  
+
   <p class="wp-caption-text">
     Sutegoma2
   </p>
@@ -176,7 +175,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_547" style="width: 514px" class="wp-caption aligncenter">
   <img class="size-full wp-image-547 " title="Peace" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg11.jpg" alt="Peace" width="504" height="672" />
-  
+
   <p class="wp-caption-text">
     One-Eyed Jack and Sutegoma members
   </p>
@@ -184,7 +183,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_548" style="width: 471px" class="wp-caption aligncenter">
   <img class="size-full wp-image-548  " title="LarsH" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg12.jpg" alt="LarsH" width="461" height="346" />
-  
+
   <p class="wp-caption-text">
     LarsH approves
   </p>
@@ -200,7 +199,7 @@ Behind us were the teams PLUS (who were originally not going to participate in t
 
 <div id="attachment_549" style="width: 574px" class="wp-caption aligncenter">
   <img class="size-full wp-image-549   " title="Dinnerz" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg13.jpg" alt="Dinnerz" width="564" height="423" />
-  
+
   <p class="wp-caption-text">
     Dinner with HFS
   </p>
@@ -214,14 +213,14 @@ After first going out to dinner with HFS as well as some organizers from the com
 
 <div id="attachment_551" style="width: 548px" class="wp-caption aligncenter">
   <img class="size-full wp-image-551  " title="Pool" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg14.jpg" alt="Pool" width="538" height="403" />
-  
+
   <p class="wp-caption-text">
     Pool with HFS
   </p>
 </div>
 
 <p style="text-align: left;">
-  The next day the team went to Seoul Women&#8217;s University to give some talks on security. This was a bit different from our normal routine, so we weren&#8217;t quite sure how things would work out.
+  The next day the team went to Seoul Women's University to give some talks on security. This was a bit different from our normal routine, so we weren't quite sure how things would work out.
 </p>
 
 <p style="text-align: center;">
@@ -230,7 +229,7 @@ After first going out to dinner with HFS as well as some organizers from the com
 
 <div id="attachment_552" style="width: 548px" class="wp-caption aligncenter">
   <img class="size-full wp-image-552  " title="SWU" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg15.jpg" alt="SWU" width="538" height="403" />
-  
+
   <p class="wp-caption-text">
     Seoul Women's University
   </p>
@@ -244,14 +243,14 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 
 <div id="attachment_554" style="width: 586px" class="wp-caption aligncenter">
   <img class="size-full wp-image-554 " title="Lockpicking" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg16.jpg" alt="Lockpicking" width="576" height="432" />
-  
+
   <p class="wp-caption-text">
     Some SWU students practicing lock picking
   </p>
 </div>
 
 <p style="text-align: left;">
-  After we left, we had dinner with a few awesome students from Seoul Women&#8217;s University, generously paid for by the professors Hyung Jong Kim and Yoonjeong Kim. Some of the students had recently formed a group for people interested in computer security, we hope to see them participate in CTF competitions soon.
+  After we left, we had dinner with a few awesome students from Seoul Women's University, generously paid for by the professors Hyung Jong Kim and Yoonjeong Kim. Some of the students had recently formed a group for people interested in computer security, we hope to see them participate in CTF competitions soon.
 </p>
 
 <p style="text-align: left;">
@@ -263,7 +262,7 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 </p>
 
 <p style="text-align: left;">
-  The next day we met up with one of Brian&#8217;s friends for lunch at a Korean Chinese restaurant and to see some new parts of Seoul.
+  The next day we met up with one of Brian's friends for lunch at a Korean Chinese restaurant and to see some new parts of Seoul.
 </p>
 
 <p style="text-align: left;">
@@ -272,7 +271,7 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 
 <div id="attachment_556" style="width: 471px" class="wp-caption aligncenter">
   <img class="size-full wp-image-556  " title="Lunch" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg18.jpg" alt="Lunch" width="461" height="346" />
-  
+
   <p class="wp-caption-text">
     Brian and Kayla
   </p>
@@ -280,14 +279,14 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 
 <div id="attachment_557" style="width: 471px" class="wp-caption aligncenter">
   <img class="size-full wp-image-557  " title="Lunch" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg19.jpg" alt="Lunch" width="461" height="346" />
-  
+
   <p class="wp-caption-text">
     Andrew and Ricky after a tasty lunch
   </p>
 </div>
 
 <p style="text-align: left;">
-  We then toured around Seoul seeing some impressive historic places and monuments, eventually we wandered into a small &#8220;tea museum&#8221;, where we each tried different types of teas.
+  We then toured around Seoul seeing some impressive historic places and monuments, eventually we wandered into a small "tea museum", where we each tried different types of teas.
 </p>
 
 <p style="text-align: center;">
@@ -303,7 +302,7 @@ We presented two talks to a classroom full of students: one talk on buffer overf
     <dt class="wp-caption-dt">
       <img class="size-full wp-image-559   " title="Tea" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg21.jpg" alt="Tea" width="559" height="417" />
     </dt>
-    
+
     <dd class="wp-caption-dd">
       Ricky and Andrew drinking tea
     </dd>
@@ -311,7 +310,7 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 </div>
 
 <p style="text-align: left;">
-  After finishing our tea, we went to a large open market/mall to see some random Korean shops. Soon after, we met up with another friend of Brian&#8217;s, who was an organizer in Codegate both this year and last, to go up to Namsan tower.
+  After finishing our tea, we went to a large open market/mall to see some random Korean shops. Soon after, we met up with another friend of Brian's, who was an organizer in Codegate both this year and last, to go up to Namsan tower.
 </p>
 
 <p style="text-align: center;">
@@ -324,7 +323,7 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 
 <div id="attachment_561" style="width: 419px" class="wp-caption aligncenter">
   <img class="size-full wp-image-561   " title="Hike" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg24.jpg" alt="Hike" width="409" height="545" />
-  
+
   <p class="wp-caption-text">
     Brian and MinKyung take a break on the hike to Namsan tower
   </p>
@@ -332,7 +331,7 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 
 <div id="attachment_562" style="width: 398px" class="wp-caption aligncenter">
   <img class="size-full wp-image-562   " title="Namsan" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg25.jpg" alt="Namsan" width="388" height="517" />
-  
+
   <p class="wp-caption-text">
     Namsan Tower
   </p>
@@ -348,14 +347,14 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 
 <div id="attachment_563" style="width: 586px" class="wp-caption aligncenter">
   <img class="size-full wp-image-563 " title="Last Supper" src="http://ppp.cylab.cmu.edu/wordpress/wp-content/uploads/2011/06/cg26.jpg" alt="Last Supper" width="576" height="432" />
-  
+
   <p class="wp-caption-text">
     PPP's last Korean dinner of the trip
   </p>
 </div>
 
 <p style="text-align: left;">
-  Of course, we love Korean food, so that couldn&#8217;t have been the end of it. When we woke up the next morning to go to the airport with Brian&#8217;s dad, we stopped for one last Korean lunch, as well.
+  Of course, we love Korean food, so that couldn't have been the end of it. When we woke up the next morning to go to the airport with Brian's dad, we stopped for one last Korean lunch, as well.
 </p>
 
 <p style="text-align: center;">
@@ -363,7 +362,7 @@ We presented two talks to a classroom full of students: one talk on buffer overf
 </p>
 
 <p style="text-align: left;">
-  With no more last Korean meals to take, we headed back to America, to catch up on a week&#8217;s worth of missed classes and homework. We had a great time in Korea! Thank you to all the Codegate organizers and all the friends we met (and made) in Seoul for such a great week.
+  With no more last Korean meals to take, we headed back to America, to catch up on a week's worth of missed classes and homework. We had a great time in Korea! Thank you to all the Codegate organizers and all the friends we met (and made) in Seoul for such a great week.
 </p>
 
 <p style="text-align: left;">
