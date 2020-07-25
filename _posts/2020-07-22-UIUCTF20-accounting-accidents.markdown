@@ -9,7 +9,7 @@ ctf: UIUCTF
 year: 2020
 ---
 
-UIUCTF20 was a really fun Animal Crossing themed CTF that ran from July 17-19 2020. While I have not played the game before, I knew somewhat what it was about from watching Youtubers play it. I know a few female friends who are really into the game, and it is also worth noting that this is one of the games where there seems to be more female players.
+UIUCTF20 was a really fun Animal Crossing themed CTF that ran from July 17-19 2020. While I have not played the game before, I somewhat knew what it was about from watching Youtubers play it, and also from memes about the turnip stock market. 
 
 PPP came in third place, which went above my expectations as most people playing were relatively new and I am quite happy with the results. Now, on to the writeup (which you can also read from the [original post](https://fanpu.io/UIUCTF20-accounting-accidents-pwn-write-up))!
 
@@ -37,7 +37,7 @@ Next run file:
 accounting: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=72ded94a52807f73d24ae7c72db8e29099a7bfc3, not stripped
 {% endhighlight %}
 
-Awesome, it is not stripped. That should make reversing it a little easier.
+Awesome, it is not stripped. This means that debugging symbols like function names are still left in the binary, which should make reversing it a little easier.
 
 ### Running
 When you run the binary, there is a bunch of text that is printed out character by character. Isabelle then asks us for the name of an item, and then the cost of 4 other items. Afterwards, she puts the item through her accounting software, and outputs the results. It categorizes things into left and right. No idea what that means for now.
@@ -91,7 +91,7 @@ ATM Repairs: 50
 {% endraw %}
 {% endhighlight %}
 
-We get a leak for the `.text` section (which is honestly pointless since there is no PIE), and if we look at the source afterwards the address actually corresponds to the `print_flag` function that basically does what it says. I also tried fuzzing it with large inputs to see if it causes a segfault, followed by testing "%x" for format string vulnerability. None of those worked, so let's get to reversing.
+We get a leak for the `.text` section (which is honestly pointless since there is no PIE (position independent execution)), and if we look at the source afterwards the address actually corresponds to the `print_flag` function that basically does what it says. I also tried fuzzing it with large inputs to see if it causes a segfault from buffer overflows, followed by testing "%x" inputs to check for format string vulnerabilies. These are quick and simple ways of testing for any obvious vulnerabilities before diving in to reversing. None of those worked, so let's get to reversing!
 
 ### Reversing
 Opening the file in Ghidra, we get the following `main` function:
