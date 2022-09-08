@@ -15,3 +15,7 @@ The easiest way to get in touch with us is often via twitter through the [@plaid
 ## Email
 
 You can also email us at [plaid.parliament.of.pwning@gmail.com](mailto:plaid.parliament.of.pwning@gmail.com). We will still try to be responsive, but may be slower responding to these. 
+
+## Current Students
+
+We meet at CIC DEC 1201 every Friday, at 5:00 pm (ET). We also have a [mailing list](https://lists.andrew.cmu.edu/mailman/listinfo/plaid-parliament-pwning) that you can subscribe to receive information about upcoming meetings. Be sure to use your Andrew email to subscribe.
