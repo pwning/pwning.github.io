@@ -18,4 +18,4 @@ You can also email us at [plaid.parliament.of.pwning@gmail.com](mailto:plaid.par
 
 ## Current Students
 
-We meet at CIC DEC 1201 every Friday, at 5:00 pm (ET). We also have a [mailing list](https://lists.andrew.cmu.edu/mailman/listinfo/plaid-parliament-pwning) that you can subscribe to receive information about upcoming meetings. Be sure to use your Andrew email to subscribe.
+We meet at CIC DEC 1201 most Fridays, at 5:00 pm (ET). We also have a [mailing list](https://lists.andrew.cmu.edu/mailman/listinfo/plaid-parliament-pwning) that you can join to receive information about upcoming meetings. Be sure to use your Andrew email to subscribe.
