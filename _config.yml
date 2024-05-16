@@ -4,7 +4,7 @@ email:       admin@pwning.net
 author:      PPP
 description: "CTF Team @ Carnegie Mellon University"
 baseurl:     ""
-url:         "http://www.pwning.net"
+url:         "http://pwning.net"
 
 # Google analytics
 google_analytics: UA-53548208-1
