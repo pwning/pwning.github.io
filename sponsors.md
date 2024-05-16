@@ -4,7 +4,7 @@ title: Sponsors
 permalink: /sponsors
 ---
 
-## 2023 PlaidCTF Sponsors
+## 2024 PlaidCTF Sponsors
 
 The PPP would like to thank the sponsors that make PlaidCTF possible.
 
